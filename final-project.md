@@ -90,7 +90,7 @@ Total: **100 points**
    Sound design choices for the solution including correct usage of OOPs concepts.
 
 3. **Implementation correctness (20)**  
-   Passes functional tests; handles edge cases; avoids UB/runtime errors.
+   Passes functional tests; handles edge cases; avoids runtime errors.
 
 4. **Analysis (15)**  
    Sound asymptotic analysis; ties to access patterns; trade‑offs discussed.
