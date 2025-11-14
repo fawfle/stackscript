@@ -1,4 +1,3 @@
-#include <iostream>
 #include <../data-structures/stack.hpp>
 #include <vector>
 using namespace std;
