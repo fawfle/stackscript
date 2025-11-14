@@ -1,4 +1,5 @@
 #include "stack.hpp"
+#include <stdexcept>
 
 // resize the dynamic array to a larger capacity
 void Stack::resize_array() {
@@ -21,11 +22,15 @@ void Stack::push(int val) {
 }
 
 int Stack::pop() {
+	if (size == 0) throw std::invalid_argument("attempted to pop value off empty stack");
+
 	size--;
 	return array[size];
 }
 
 int Stack::peek() const {
+	if (size == 0) throw std::invalid_argument("attempted to pop value off empty stack");
+
 	return array[size - 1];
 }
 
