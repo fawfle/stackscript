@@ -13,3 +13,35 @@ Our program’s chosen data structure is the stack. Stack oriented programming r
 
 We will also likely use hash tables to store the location of “words” since they will be associated with a key. Hash tables have constant time lookup for key value pairs and “words” making them quicker than other structures. “Words” also have no inherent order so traversal advantages like those in BSTs don’t apply.
 
+## Example
+
+An example program might look like
+
+```
+1 2 + 5 *
+```
+
+which would compute the result of (1 + 2) * 5. More complex functions might take the form of
+
+```
+1 5 - 2 = IF THEN 1 p; ELSE 0 p;
+```
+
+which would compute the equivalent of 
+
+```
+if (1 - 5 == 2):
+    print(1)
+else:
+    print(0)
+```
+
+Words could be reusable functions that are just a list of other instructions. Parenthesis contain comments on the input/output of the function.
+
+```
+# takes in a single number on the stack and squares it
+SQUARE (n): dup *
+
+# raises the number on the top of the stack to the next number on the stack
+POW (p n -- n): swap 0 > IF swap dup * POW;
+```
