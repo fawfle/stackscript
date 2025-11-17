@@ -43,5 +43,5 @@ Words could be reusable functions that are just a list of other instructions. Pa
 SQUARE (n): dup *
 
 # raises the number on the top of the stack to the next number on the stack
-POW (p n -- n): swap 0 > IF swap dup * POW;
+POW (n p -- n): 1 - 0 > IF swap dup * swap POW; ELSE drop;
 ```
