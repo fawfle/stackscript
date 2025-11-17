@@ -1,11 +1,11 @@
-# Project Report
+# **Project Report**
 
-## Problem Statement
+## **Problem Statement**
 Problem: How can we create a beginner-friendly programming language in a creative way?
 
 We will create a programming language interpreter that follows the stack oriented paradigm. Stack oriented programming languages work by manipulating data on a stack. The simplicity of hte operations makes them a good choice for developing programming languages.
 
-## Related Data Structure Alternatives
+## **Related Data Structure Alternatives**
 
 ### Stacks (Chosen Data Structure)
 The programming language is a stack-based language because the syntax becomes simple. For example, to evaluate 1+2, the syntax for this language would become:
@@ -34,10 +34,10 @@ Hash tables used to store variable pointers. This is because accessing pointers 
 
 Another possible way to store the variables is through a dynamic array. The benefit of storing variables in the next available spot in an array is that arrays use much less space than hash tables. However, the biggest downside to an array is that iterating through an array to access a variable is much less efficient than using a hash function to access a variable in a hash table.
 
-## Operation Algorithms and Complexity
+## **Operation Algorithms and Complexity**
 
-## Testing Strategy
+## **Testing Strategy**
 
-## When Does the Chosen Data Structure Fail?
+## **When Does the Chosen Data Structure Fail?**
 
-## Limitations and future work
+## **Limitations and future work**
