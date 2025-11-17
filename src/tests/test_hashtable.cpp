@@ -35,7 +35,7 @@ void test_add_entries(int num_entries) {
 		}
 	}
 
-	// removal significantly increases time to run
+	// removal significantly increases time to run since shuffling takes a really long time. Without shuffling the performance is as expected
 	return;
 	// test removal
 	std::random_device rd;
