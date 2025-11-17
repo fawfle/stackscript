@@ -7,5 +7,6 @@ class Scanner {
         vector<string> tokens;
     public:
         void tokenify(string str);
+        vector<string> getTokens() {return tokens;};
         
 };
