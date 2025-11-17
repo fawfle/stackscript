@@ -10,7 +10,7 @@ We will create a programming language interpreter that follows the stack oriente
 ### Stacks (Chosen Data Structure)
 The programming language is a stack-based language because the syntax becomes simple. For example, to evaluate 1+2, the syntax for this language would become:
 
-> 1 2 + PRINT
+1 2 + PRINT
 
 To evaluate this, the stack would first add 1 and 2 to the stack. The stack now holds the values [1,2], where the last element is the top of the stack. When the + arrives, the 2 and 1 will be popped from the stack and added. Then, the resulting value (3) will be added to the stack. When the PRINT comes, the 3 will be popped from the stack and then printed.
 
@@ -18,6 +18,21 @@ To evaluate this, the stack would first add 1 and 2 to the stack. The stack now 
 The stack is being implemented through dynamic arrays. One benefit of using dynamic arrays to implement stacks is that it is efficient to add elements at the end of the array and pop them off from the end of the array.
 
 Although dynamic arrays are used to implement the stack, they were not used in their raw form. This is because it is much easier and understandable to use peek(), pop(), and push() methods than consistently accessing the last element in the array. Moreover, having the stack automatically resize itself when using the push() method makes programming much easier for the programmer. The abstraction of a stack class makes the program readable and avoids the need of implementing the functions every time.
+
+### Queues
+Queues are similar to stacks in that they use peek(), pop(), and push() methods to access, delete, and add only either the first or last element in the queue. However, the "First In First Out" property of a queue makes it less appealing than a stack, which has a "Last In First Out" property. One reason for this is that order of operation controllers are much better implemented with stacks. For example, the syntax (2 3 4 + * PRINT) can be evaluated like this:
+
+1. Stack: [2, 3, 4]
+2. To add, pop off 4 and 3 and add them, resulting in 7.
+3. Add 7 to the stack: [2,7]
+4. Pop off 7 and 2 and multiply them, resulting in 14.
+5. Add 14 to the stack: [14]
+6. Print 14.
+
+### Hash Table (Chosen for Variable Storage)
+Hash tables used to store variable pointers. This is because accessing pointers to variables via a hash function is very efficient time-wise.
+
+Another possible way to store the variables is through a dynamic array. The benefit of storing variables in the next available spot in an array is that arrays use much less space than hash tables. However, the biggest downside to an array is that iterating through an array to access a variable is much less efficient than using a hash function to access a variable in a hash table.
 
 ## Operation Algorithms and Complexity
 
