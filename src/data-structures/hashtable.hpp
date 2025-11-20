@@ -6,7 +6,7 @@
 #define MIN_CAPACITY 23
 #define LOAD_FACTOR 0.50
 
-#define MAX_CHECKS 100
+#define MAX_CHECKS 15
 
 // a data class to store key and value for validating
 template <typename K, typename V>
@@ -36,6 +36,8 @@ class HashTable {
 
 	public:
 		int hash(K key) const;
+		// use quadratic probing with c1 = 0 and c2 = 1
+		int probe(int start, int i) const { return (start + i * i) % capacity; }
 		// find valid location for new keys
 		int find_open_index(K key) const;
 		// find location of key
@@ -47,6 +49,8 @@ class HashTable {
 		V& get(K key) const;
 		
 		void remove(K key);
+
+		bool contains(K key) const;
 
 		~HashTable<K, V>();
 
@@ -106,7 +110,7 @@ void HashTable<K, V>::resize_table() {
 template <typename K, typename V>
 int HashTable<K, V>::hash(K key) const {
 	if (capacity == 0) return -1;
-	std::hash<std::string> hasher;
+	std::hash<K> hasher;
 	return hasher(key) % capacity;
 }
 
@@ -121,8 +125,8 @@ int HashTable<K, V>::find_open_index_in_entry_list(HashTableEntry<K, V> ** const
 	// rather than looking for open indices, specifically look for key
 	while (entry_list[current_index] != nullptr && entry_list[current_index]->key != key) {
 		// use quadratic probing to find next index. c1 = 0, c2 = 1
-		current_index = (start_index + (num_collisions * num_collisions)) % capacity;
 		num_collisions++;
+		current_index = probe(start_index, num_collisions);
 	}
 	return current_index;
 }
@@ -137,13 +141,19 @@ int HashTable<K, V>::find_key_index(K key) const {
 	int start_index = hash(key);
 	int current_index = start_index;
 	int num_checks = 0;
-	while (entries[current_index] == nullptr || entries[current_index]->key != key) {
-		if (num_checks > MAX_CHECKS) throw std::invalid_argument("failed to find key. num checks exceeded max checks of: " + std::to_string(MAX_CHECKS));
-		// use quadratic probing to find next index. c1 = 0, c2 = 1
-		current_index = (start_index + (num_checks * num_checks)) % capacity;
+	while (num_checks < MAX_CHECKS) {
+		if (entries[current_index] != nullptr && entries[current_index]->key == key) return current_index;
+
 		num_checks++;
+		current_index = probe(start_index, num_checks);
 	}
-	return current_index;
+
+	// if probing fails for MAX_CHECKS, switch to checking every value. Not the most efficient, but ensures it will always work.
+	for (int i = 0; i < capacity; i++) {
+		if (entries[i] != nullptr && entries[i]->key == key) return i;
+	}
+
+	throw std::invalid_argument("failed to find key.");
 }
 
 template <typename K, typename V>
@@ -190,6 +200,17 @@ void HashTable<K, V>::remove(K key) {
 	num_elements--;
 	delete entries[index];
 	entries[index] = nullptr;
+}
+
+template <typename K, typename V>
+bool HashTable<K, V>::contains(K key) const {
+	try {
+		find_key_index(key);
+	}
+	catch (std::invalid_argument) {
+		return false;
+	}
+	return true;
 }
 
 template <typename K, typename V>

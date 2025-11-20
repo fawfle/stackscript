@@ -47,6 +47,22 @@ void test_add_entries(int num_entries) {
 	}
 }
 
+void test_contains(int num_entries) {
+	HashTable<std::string, int> table = HashTable<std::string, int>();
+
+	std::vector<std::string> keys;
+
+	for (int i = 0; i < num_entries; i++) {
+		std::string key = gen_random_string(8);
+		keys.push_back(key);
+		table.add(key, i);
+	}
+	for (int i = 0; i < num_entries; i++) {
+		std::string key = gen_random_string(7);
+		if (table.contains(key)) std::cout << "Table should not contain key: " << key << std::endl;
+	}
+}
+
 int main(int argc, char *argv[]) {
 	std::srand(std::time(0));
 
@@ -64,4 +80,6 @@ int main(int argc, char *argv[]) {
 
 		num_entries *= 2;
 	}
+
+	test_contains(100);
 }
