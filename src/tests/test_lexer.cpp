@@ -12,7 +12,7 @@ std::string slurp(std::ifstream& in) {
 }
 
 int main(int argc, char *argv[]) {
-	std::ifstream input_file{"./src/programs/test.txt"};
+	std::ifstream input_file{"./src/tests/programs/test_lexer.txt"};
 	
 	if (!input_file.is_open()) {
 		std::cout << "Error opening file." << std::endl;
@@ -22,4 +22,6 @@ int main(int argc, char *argv[]) {
 	std::cout << "File string: " << file_string << std::endl;
 
 	Lexer lexer = Lexer(file_string);
+
+	lexer.dump_tokens();
 }

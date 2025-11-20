@@ -1,0 +1,26 @@
+(){}
+:;
++-*/
+& ||
+! !=
+> >=
+< <=
+
+IF ELSE
+print cprint p cp
+peek
+dup
+swap
+nswap
+# this is a comment
+
+1 2 3 4 5 6 7 8 9
+1234
+
+3523
+
+"a"
+
+"hello"
+
+DEF WORD: dup *
