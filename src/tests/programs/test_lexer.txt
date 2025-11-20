@@ -1,4 +1,4 @@
-(){}
+{}
 :;
 +-*/
 & ||
@@ -13,6 +13,8 @@ dup
 swap
 nswap
 # this is a comment
+
+(this is also a comment)
 
 1 2 3 4 5 6 7 8 9
 1234

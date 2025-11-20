@@ -17,7 +17,6 @@ bool is_alphanumeric(char c) {
 // this is horrible
 std::string token_type_to_string(TokenType type) {
 	switch (type) {
-		case LEFT_PAREN: return "LEFT_PAREN"; case RIGHT_PAREN: return "RIGHT_PAREN";
 		case LEFT_BRACE: return "LEFT_BRACE"; case RIGHT_BRACE: return "RIGHT_BRACE";
 		case COLON: return "COLON"; case SEMICOLON: return "SEMICOLON";
 		case MINUS: return "MINUS"; case PLUS: return "PLUS"; case STAR: return "STAR"; case SLASH: return "SLASH";
@@ -30,7 +29,6 @@ std::string token_type_to_string(TokenType type) {
 		case DEF: return "DEF";
 		case PRINT: return "PRINT"; case CHAR_PRINT: return "CHAR_PRINT"; case PEEK: return "PEEK";
 		case DUP: return "DUP"; case SWAP: return "SWAP"; case N_SWAP: return "N_SWAP";
-		case HASHTAG: return "HASHTAG";
 		case END: return "END";
 	}
 	return "";
@@ -76,8 +74,6 @@ void Lexer::scan_token() {
 
 	// check tokens
 	switch (c) {
-		case '(': add_token(LEFT_PAREN); break;
-		case ')': add_token(RIGHT_PAREN); break;
 		case '{': add_token(LEFT_BRACE); break;
 		case '}': add_token(RIGHT_BRACE); break;
 		case ':': add_token(COLON); break;
@@ -85,9 +81,16 @@ void Lexer::scan_token() {
 
 		// since these represent comments, skip to newline
 		case '#': 
-			add_token(HASHTAG); 
-			while (peek() != '\n' && !at_end()) current++;
+			while (!at_end() && peek() != '\n') current++;
 			break;
+		
+		// parenthesis are used for comments as well. Anything within them is ignored
+		case '(':
+			while (!at_end() && peek() != ')') current++;
+			if (at_end()) raise_error(line, "Possibly unmached comment \'(\'");
+			current++;
+			break;
+		case ')': raise_error(line, "Unexpected end to comment."); break;
 
 		case '+': add_token(PLUS); break;
 		case '-': add_token(MINUS); break;
@@ -158,7 +161,6 @@ void Lexer::scan_string() {
 
 void Lexer::scan_number() {
 	while (is_digit(peek())) {
-		std::cout << "peeked";
 		current++;
 	}
 

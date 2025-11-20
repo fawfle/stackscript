@@ -2,7 +2,7 @@
 
 enum TokenType {
 	// Separator/punctuator
-	LEFT_PAREN, RIGHT_PAREN,
+	// LEFT_PAREN, RIGHT_PAREN,
 	LEFT_BRACE, RIGHT_BRACE,
 	COLON,
 	SEMICOLON,
@@ -27,7 +27,7 @@ enum TokenType {
 	SWAP, N_SWAP,
 
 	// comments
-	HASHTAG,
+	// HASHTAG,
 
 	// for parser
 	END
