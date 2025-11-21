@@ -24,10 +24,11 @@ std::string token_type_to_string(TokenType type) {
 		case BANG: return "BANG"; case BANG_EQUAL: return "BANG_EQUAL";
 		case EQUAL: return "EQUAL";
 		case GREATER: return "GREATER"; case GREATER_EQUAL: return "GREATER_EQUAL"; case LESS: return "LESS"; case LESS_EQUAL: return "LESS_EQUAL";
-		case IDENTIFIER: return "IDENTIFIER"; case NUMBER: return "NUMBER";
+		case IDENTIFIER: return "IDENTIFIER"; case NUMBER: return "NUMBER"; case STRING: return "STRING";
 		case IF: return "IF"; case ELSE: return "ELSE";
 		case DEF: return "DEF";
-		case PRINT: return "PRINT"; case CHAR_PRINT: return "CHAR_PRINT"; case PEEK: return "PEEK";
+		case PRINT: return "PRINT"; case CHAR_PRINT: return "CHAR_PRINT"; case PEEK: return "PEEK"; case CHAR_PEEK: return "CHAR_PEEK";
+		case INPUT: return "INPUT"; case CHAR_INPUT: return "CHAR_INPUT";
 		case DUP: return "DUP"; case SWAP: return "SWAP"; case N_SWAP: return "N_SWAP";
 		case END: return "END";
 	}
@@ -44,9 +45,14 @@ KeywordContainer::KeywordContainer() {
 	keywords.add("p", PRINT);
 	keywords.add("cp", CHAR_PRINT);
 	keywords.add("peek", PEEK);
+	keywords.add("cpeek", CHAR_PEEK);
 	keywords.add("dup", DUP);
 	keywords.add("swap", SWAP);
 	keywords.add("nswap", N_SWAP);
+	keywords.add("input", INPUT);
+	keywords.add("in", INPUT);
+	keywords.add("cinput", CHAR_INPUT);
+	keywords.add("cin", CHAR_INPUT);
 }
 
 // Need to handle edge cases
@@ -143,12 +149,10 @@ void Lexer::scan_token() {
 // scans string 
 void Lexer::scan_string() {
 	while (!at_end() && peek() != '\"' && peek() != '\n') {
-		start = current;
-		char c = source[current];
 		current++;
-		// for practical reasons, "strings" and chars are treated as lists of individual numbers to be pushed onto the stack
-		add_token(NUMBER, c);
 	}
+	start++;
+	add_token(STRING);
 
 	if (at_end() || peek() == '\n') {
 		raise_error(line, "Unterminated string.");

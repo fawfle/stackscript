@@ -17,14 +17,17 @@ enum TokenType {
 	LESS, LESS_EQUAL,
 
 	// literals
-	IDENTIFIER, NUMBER,
+	NUMBER, STRING,
+
+	IDENTIFIER,
 
 	// keywords
 	IF, ELSE,
 	DEF,
-	PRINT, CHAR_PRINT, PEEK,
+	PRINT, CHAR_PRINT, PEEK, CHAR_PEEK,
 	DUP,
 	SWAP, N_SWAP,
+	INPUT, CHAR_INPUT,
 
 	// comments
 	// HASHTAG,

@@ -6,6 +6,8 @@
 > >=
 < <=
 
+"this is a string"
+
 IF ELSE
 print cprint p cp
 peek
