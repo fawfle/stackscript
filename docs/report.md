@@ -36,6 +36,19 @@ Another possible way to store the variables is through a dynamic array. The bene
 
 ## **Operation Algorithms and Complexity**
 
+### Hash Table
+
+#### Hash Function (with Quadratic Probing)
+The hash function involves hashing keys to buckets using the modulo operation. The best case scenario is when there is no collision after applying the hashing function to the key. In this case, the time complexity is O(1) because the time complexity of applying the hashing function is O(1).
+
+The worst case scenario is when after applying the hash funciton to the key, a collision happens. The chosen method for handling collisions is quadratic probing. In this case, the time complexity is O(n) because it is theoretically possible for only one bucket to be available in the hash table, and for the program to traverse through all the buckets before reaching that empty bucket.
+
+### Stack
+The dynamic array implementation of the stack makes the stack functions very efficient.
+
+#### Push
+
+
 ## **Testing Strategy**
 
 ## **When Does the Chosen Data Structure Fail?**
