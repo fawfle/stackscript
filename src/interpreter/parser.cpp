@@ -52,5 +52,10 @@ Statement Parser::parse_block_statement() {
 	return BlockStatement(statements);
 }
 
-bool match_and_consume(TokenType type) {
+bool Parser::match_and_consume(TokenType type) {
+	if (at_end()) return false;
+	if (peek().type != type) return false;
+
+	current++;
+	return true;
 }
