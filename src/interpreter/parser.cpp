@@ -35,7 +35,10 @@ Statement Parser::parse_statement() {
 
 // IF ~ ELSE ~
 Statement Parser::parse_if_statement() {
-
+	Statement then_branch = parse_statement();
+	if (peek().type == ELSE) {
+		Statement else_branch = parse_statement();
+	}
 }
 
 // DEF WORD ~

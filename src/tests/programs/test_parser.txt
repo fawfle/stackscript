@@ -1,6 +1,10 @@
 1 2 +
 12 25 /
 
-1 1 = IF "true" print; ELSE "false" print;
+1 1 = IF: "true" print; ELSE: "false" print;
+
+1 1 = IF 1
 
 DEF WORD: dup *;
+
+DEF DUP dup

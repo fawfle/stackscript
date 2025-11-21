@@ -134,13 +134,13 @@ void ExpressionStatement::evaluate(Interpreter &interpreter) {
 		}
 		// when evaluated on own, adds a bunch of chars
 		case STRING: {
-			for (int i = 0; i < token.lexemme.length(); i++) {
-				stack.push(token.lexemme[i]);
+			for (int i = 0; i < token.lexeme.length(); i++) {
+				stack.push(token.lexeme[i]);
 			}
 		}
 		// identifier
 		case IDENTIFIER: {
-			interpreter.call(token.lexemme);
+			interpreter.call(token.lexeme);
 			break;
 		}
 		// input

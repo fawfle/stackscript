@@ -228,7 +228,7 @@ std::string Lexer::token_to_string(Token t) const {
 	std::string s = "(TYPE) " + token_type_to_string(t.type) + " (TEXT) " + t.lexeme;
 
 	if (t.type == NUMBER) s += " (LITERAL) " + std::to_string(t.literal);
-	s += " [LINE " + std::to_string(line) + "]";
+	s += " [LINE " + std::to_string(t.line) + "]";
 
 	return s;
 }
