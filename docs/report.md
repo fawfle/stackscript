@@ -47,7 +47,15 @@ The worst case scenario is when after applying the hash funciton to the key, a c
 The dynamic array implementation of the stack makes the stack functions very efficient.
 
 #### Push
+Because the stack is implemented with a dynamic array, pushing an element onto the stack is the same as appending to the end of the array. Appending to the end of the array involves only one operation because we have access to the size of the array. Therefore, the time complexity for pushing an element onto the stack is O(1).
 
+If the stack is full, pushing an element to the stack requires the stack, implemented by a dynamic array, to be resized. Because this requires only one operation, the time complexity for pushing an element to the stack is still O(1).
+
+#### Peek
+Because we can access the top of the stack (end of the dynamic array) with one operation, the time complexity for peeking is O(1).
+
+#### Pop
+We have direct access to the top of the stack because we have direct access to the size of the array. Because the top of the stack is at the end of the dynamic array, deleting the top of the stack will not require any shifting of elements. Therefore, the time complexity for popping is O(1).
 
 ## **Testing Strategy**
 
