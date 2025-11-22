@@ -1,20 +1,35 @@
 GXX = g++
 
-CXXFLAGS = -Wall -g -pedantic
+CXXFLAGS = --std=c++17 -Wall -g -pedantic
 
-TARGETS = ./src/data-structures/stack.cpp ./src/interpreter/lexer.cpp
+OBJ_DIR := ./build/obj
+BUILD_DIR = ./build
+
+SRC_DIR = ./src
+DS_DIR = ./src/data-structures/
+INTERPRETER_DIR = ./src/interpreter/
+
+SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(DS_DIR)/*.cpp) $(wildcard $(INTERPRETER_DIR)/*.cpp)
+OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
+
+TARGETS = ./src/data-structures/stack.cpp ./src/interpreter/lexer.cpp ./src/interpreter/interpreter.cpp ./src/interpreter/statement.cpp
 
 STACK_TEST = ./build/stack_test
 HASHTABLE_TEST = ./build/hashtable_test
-SCANNER_TEST = ./build/lexer_test
+LEXER_TEST = ./build/lexer_test
+PARSER_TEST = ./build/parser_test
 
-tests:
-	@mkdir -p build
-	$(GXX) ./src/tests/test_stack.cpp $(TARGETS) -o $(STACK_TEST)
-	$(GXX) ./src/tests/test_hashtable.cpp $(TARGETS) -o $(HASHTABLE_TEST)
-	$(GXX) ./src/tests/test_lexer.cpp $(TARGETS) -o $(SCANNER_TEST)
+tests: $(OBJ_FILES) | directories
+	$(GXX) $(CXXFLAGS) ./src/tests/test_stack.cpp $(OBJ_FILES) -o $(STACK_TEST)
+	$(GXX) $(CXXFLAGS) ./src/tests/test_hashtable.cpp $(OBJ_FILES) -o $(HASHTABLE_TEST)
+	$(GXX) $(CXXFLAGS) ./src/tests/test_lexer.cpp $(OBJ_FILES) -o $(LEXER_TEST)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | directories
+	mkdir -p $(dir $@)
+	$(GXX) $(CXXFLAGS) -c -o $@ $<
+
+directories:
+	mkdir -p $(BUILD_DIR)
+	mkdir -p $(OBJ_DIR)
 
 clean:
-	rm $(STACK_TEST)
-	rm $(HASHTABLE_TEST)
-	rm $(SCANNER_TEST)
