@@ -29,7 +29,7 @@ void test_add_entries(int num_entries) {
 	}
 
 	// check all keys are present with correct value
-	for (uint i = 0; i < keys.size(); i++) {
+	for (int i = 0; (uint)i < keys.size(); i++) {
 		if (table.get(keys[i]) != i) {
 			std::cout << "Expected value: " << i << " at key: " << keys[i] << std::endl;
 		}

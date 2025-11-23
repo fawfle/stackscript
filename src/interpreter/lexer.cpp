@@ -27,7 +27,7 @@ std::string token_type_to_string(TokenType type) {
 		case IDENTIFIER: return "IDENTIFIER"; case NUMBER: return "NUMBER"; case STRING: return "STRING";
 		case IF: return "IF"; case ELSE: return "ELSE";
 		case DEF: return "DEF";
-		case PRINT: return "PRINT"; case CHAR_PRINT: return "CHAR_PRINT"; case PEEK: return "PEEK"; case CHAR_PEEK: return "CHAR_PEEK";
+		case PRINT: return "PRINT"; case CHAR_PRINT: return "CHAR_PRINT"; case PEEK: return "PEEK"; case CHAR_PEEK: return "CHAR_PEEK"; case PRINT_LN: return "PRINT_LN"; case CHAR_PRINT_LN: return "CHAR_PRINT_LN"; case LN: return "LN";
 		case INPUT: return "INPUT"; case CHAR_INPUT: return "CHAR_INPUT";
 		case DUP: return "DUP"; case SWAP: return "SWAP"; case N_SWAP: return "N_SWAP";
 		case END: return "END";
@@ -42,8 +42,13 @@ KeywordContainer::KeywordContainer() {
 	keywords.add("DEF", DEF);
 	keywords.add("print", PRINT);
 	keywords.add("cprint", CHAR_PRINT);
+	keywords.add("println", PRINT_LN);
+	keywords.add("cprintln", CHAR_PRINT_LN);
 	keywords.add("p", PRINT);
+	keywords.add("pln", PRINT_LN);
 	keywords.add("cp", CHAR_PRINT);
+	keywords.add("cpln", CHAR_PRINT_LN);
+	keywords.add("ln", LN);
 	keywords.add("peek", PEEK);
 	keywords.add("cpeek", CHAR_PEEK);
 	keywords.add("dup", DUP);
@@ -71,7 +76,7 @@ void Lexer::scan_tokens() {
 		scan_token();
 	}
 
-	tokens.push_back(Token{END, "", 0, 1});
+	tokens.push_back(Token{END, "", 0, line});
 }
 
 void Lexer::scan_token() {
@@ -109,6 +114,7 @@ void Lexer::scan_token() {
 			else raise_error(line, "Possibly unmatched or.");
 			break;
 		
+		case '=': add_token(EQUAL); break;
 		// '!' operator is more complicated as it can exist as '!' or '!='
 		case '!': add_token(match_and_consume('=')? BANG_EQUAL : BANG); break;
 		// same goes for '<' and '>'
@@ -210,11 +216,11 @@ std::string Lexer::current_string() const {
 }
 
 bool Lexer::at_end() const {
-	return current >= source.length();
+	return (uint)current >= source.length();
 }
 
 void Lexer::raise_error(int line, std::string message) {
-	std::cerr << "[Line " << line << "] Error: " << message << std::endl;
+	std::cerr << "[Line " << line << "] Lexer Error: " << message << std::endl;
 	had_error = true;
 }
 

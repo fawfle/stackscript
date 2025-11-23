@@ -5,11 +5,16 @@ class Interpreter;
 
 #include "interpreter.hpp"
 #include "./token.hpp"
+
+#include <string>
 #include <vector>
 
 class Statement {
 	public:
-		virtual void evaluate(Interpreter &interpreter);
+		int line = 0;
+		virtual ~Statement() {};
+		virtual void evaluate(Interpreter *interpreter)=0;
+		virtual std::string to_string()=0;
 };
 
 // class for expressions
@@ -17,31 +22,51 @@ class ExpressionStatement : public Statement {
 	Token token;
 	public:
 		ExpressionStatement(Token token);
-		void evaluate(Interpreter &interpreter) override;
+		void evaluate(Interpreter *interpreter) override;
+		std::string to_string() override;
 };
 
 class IfStatement : public Statement {
-	Statement then_branch;
-	Statement else_branch;
+	Statement *then_branch = nullptr;
+	Statement *else_branch = nullptr;
 	public:
-		IfStatement(Statement then_branch);
-		IfStatement(Statement then_branch, Statement else_branch);
-		void evaluate(Interpreter &interpreter) override;
+		IfStatement(Statement *then_branch);
+		IfStatement(Statement *then_branch, Statement *else_branch);
+		~IfStatement();
+		void evaluate(Interpreter *interpreter) override;
+		std::string to_string() override;
 };
 
 class FunctionStatement : public Statement {
-	Statement statement;
+	Token identifier;
+	Statement *statement = nullptr;
 	public:
-		FunctionStatement(Statement statement);
-		void evaluate(Interpreter &interpreter) override;
+		FunctionStatement(Token identifier, Statement *statement);
+		~FunctionStatement();
+		void evaluate(Interpreter *interpreter) override;
+		std::string to_string() override;
+
+		Token get_identifier() const { return identifier; };
+		Statement *get_statement() const { return statement; };
 };
 
 class BlockStatement : public Statement {
 	Token end_token;
-	std::vector<Statement> statements;
+	std::vector<Statement*> statements;
 	public:
-		BlockStatement(std::vector<Statement> statements);
-		void evaluate(Interpreter &interpreter) override;
+		BlockStatement(std::vector<Statement*> statements);
+		~BlockStatement();
+		void evaluate(Interpreter *interpreter) override;
+		std::string to_string() override;
+};
+
+class PrintStatement : public Statement {
+	std::string string;
+	bool new_line = false;
+	public:
+		PrintStatement(Token string, bool new_line = false);
+		void evaluate(Interpreter *interpreter) override;
+		std::string to_string() override;
 };
 
 #endif

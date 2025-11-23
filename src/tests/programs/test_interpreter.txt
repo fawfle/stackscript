@@ -1,0 +1,11 @@
+DEF STARTING "Starting Program" println
+
+DEF SQUARE: dup *;
+
+DEF POW (n p -- 'n): 1 - 0 > IF swap dup * swap POW; ELSE drop;
+
+STARTING
+
+5 SQUARE println
+
+5 2 POW println

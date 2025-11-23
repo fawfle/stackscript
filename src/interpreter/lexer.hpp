@@ -1,3 +1,6 @@
+#ifndef LEXER_H
+#define LEXER_H
+
 #include "../data-structures/hashtable.hpp"
 #include "./token.hpp"
 
@@ -53,4 +56,7 @@ class Lexer {
 		Lexer(std::string source);
 
 		void dump_tokens() const;
+		std::vector<Token> get_tokens() const { return tokens; }
 };
+
+#endif

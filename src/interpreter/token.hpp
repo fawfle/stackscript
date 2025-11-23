@@ -1,3 +1,6 @@
+#ifndef TOKEN_H
+#define TOKEN_H
+
 #include <string>
 
 enum TokenType {
@@ -25,6 +28,7 @@ enum TokenType {
 	IF, ELSE,
 	DEF,
 	PRINT, CHAR_PRINT, PEEK, CHAR_PEEK,
+	LN, PRINT_LN, CHAR_PRINT_LN,
 	DUP,
 	SWAP, N_SWAP,
 	INPUT, CHAR_INPUT,
@@ -43,3 +47,5 @@ struct Token {
 	int literal;
 	int line;
 };
+
+#endif

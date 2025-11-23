@@ -1,5 +1,6 @@
 #include "../interpreter/lexer.hpp"
 #include "../interpreter/parser.hpp"
+#include "../interpreter/interpreter.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -13,7 +14,7 @@ std::string slurp(std::ifstream& in) {
 }
 
 int main(int argc, char *argv[]) {
-	std::ifstream input_file{"./src/tests/programs/test_parser.txt"};
+	std::ifstream input_file{"./src/tests/programs/test_interpreter.txt"};
 	
 	if (!input_file.is_open()) {
 		std::cout << "Error opening file." << std::endl;
@@ -31,4 +32,9 @@ int main(int argc, char *argv[]) {
 	
 	std::cout << "Dumping statements..." << std::endl;
 	parser.dump_statements();
+
+	std::cout << "Running..." << std::endl;
+	Interpreter interpreter = Interpreter(parser.get_statements());
+
+	interpreter.execute();
 }

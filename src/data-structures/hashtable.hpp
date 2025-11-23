@@ -1,9 +1,12 @@
+#ifndef HASHTABLE_H
+#define HASHTABLE_H
+
 #include <iostream>
 #include <stdexcept>
 #include <string>
 
 // should be prime
-#define MIN_CAPACITY 23
+#define MIN_TABLE_CAPACITY 23
 #define LOAD_FACTOR 0.50
 
 #define MAX_CHECKS 15
@@ -21,7 +24,6 @@ struct HashTableEntry {
 template  <typename K, typename V>
 class HashTable {
 	private:
-		// I've ran into lots of memory problems so I initialize entries with nullptr and allocate when the first element is added
 		HashTableEntry<K, V> **entries = nullptr;
 		int capacity = 0;
 		int num_elements = 0;
@@ -35,6 +37,8 @@ class HashTable {
 		int find_open_index_in_entry_list(HashTableEntry<K, V> **const& entry_list, K key) const;
 
 	public:
+		HashTable();
+
 		int hash(K key) const;
 		// use quadratic probing with c1 = 0 and c2 = 1
 		int probe(int start, int i) const { return (start + i * i) % capacity; }
@@ -52,7 +56,7 @@ class HashTable {
 
 		bool contains(K key) const;
 
-		~HashTable<K, V>();
+		~HashTable();
 
 		// overloaded operators for dictionary style access
 		V& operator [] (K key) const { return get(key); };
@@ -74,6 +78,14 @@ inline int find_closest_prime(int num) {
 }
 
 template <typename K, typename V>
+HashTable<K, V>::HashTable() {
+	capacity = MIN_TABLE_CAPACITY;
+	num_elements = 0;
+
+	entries = new HashTableEntry<K, V>*[capacity]();
+}
+
+template <typename K, typename V>
 void HashTable<K, V>::free_table() {
 	for (int i = 0; i < capacity; i++) {
 		if (entries[i] != nullptr) {
@@ -85,8 +97,7 @@ void HashTable<K, V>::free_table() {
 
 template <typename K, typename V>
 void HashTable<K, V>::resize_table() {
-	if (capacity == 0) capacity = MIN_CAPACITY;
-	else capacity *= find_closest_prime(capacity * 2);
+	capacity *= find_closest_prime(capacity * 2);
 	// parenthesis are really important here, they initialize the list to nullptrs
 	HashTableEntry<K, V> **new_entries = new HashTableEntry<K, V>*[capacity]();
 
@@ -109,7 +120,6 @@ void HashTable<K, V>::resize_table() {
 
 template <typename K, typename V>
 int HashTable<K, V>::hash(K key) const {
-	if (capacity == 0) return -1;
 	std::hash<K> hasher;
 	return hasher(key) % capacity;
 }
@@ -117,8 +127,6 @@ int HashTable<K, V>::hash(K key) const {
 // method for finding free index in a variable entries. Used for copying
 template <typename K, typename V>
 int HashTable<K, V>::find_open_index_in_entry_list(HashTableEntry<K, V> ** const& entry_list, K key) const {
-	if (entry_list == nullptr) return -1;
-
 	int start_index = hash(key);
 	int current_index = start_index;
 	int num_collisions = 0;
@@ -207,7 +215,7 @@ bool HashTable<K, V>::contains(K key) const {
 	try {
 		find_key_index(key);
 	}
-	catch (std::invalid_argument) {
+	catch (std::invalid_argument &exception) {
 		return false;
 	}
 	return true;
@@ -218,3 +226,5 @@ HashTable<K, V>::~HashTable() {
 	free_table();
 	if (entries != nullptr) delete [] entries;
 }
+
+#endif
