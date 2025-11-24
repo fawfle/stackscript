@@ -24,7 +24,7 @@ An example program might look like
 which would compute the result of (1 + 2) * 5. More complex functions might take the form of
 
 ```
-1 5 - 2 = IF THEN 1 p; ELSE 0 p;
+1 5 - 2 = IF: 1 p; ELSE: 0 p;
 ```
 
 which would compute the equivalent of 
@@ -43,5 +43,11 @@ Words could be reusable functions that are just a list of other instructions. Pa
 SQUARE (n): dup *
 
 # raises the number on the top of the stack to the next number on the stack
-POW (n p -- n): 1 - 0 > IF swap dup * swap POW; ELSE drop;
+DEF POW (n p -- 'n):
+	swap dup 3 nswap POW_HELPER
+;
+
+DEF POW_HELPER (n x p -- x'):
+	1 - dup 0 > IF: 3 nswap dup 3 nswap * swap 3 nswap POW_HELPER; ELSE: drop swap drop;
+;
 ```
