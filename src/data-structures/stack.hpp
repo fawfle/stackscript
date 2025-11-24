@@ -1,6 +1,8 @@
 #define GROWTH_FACTOR 2
 #define MIN_CAPACITY 10
 
+#include <string>
+
 class Stack {
 	private:
 		int *array = new int[MIN_CAPACITY];
@@ -16,5 +18,6 @@ class Stack {
 		int peek() const;
 		bool is_empty() const { return size == 0; };
 
+		std::string to_string(std::string delimeter = ", ", int limit = -1);
 		~Stack();
 };

@@ -34,6 +34,20 @@ int Stack::peek() const {
 	return array[size - 1];
 }
 
+std::string Stack::to_string(std::string separator, int limit) {
+	std::string res = "";
+	int start = 0;
+	if (limit != -1) start = std::max(start, size - limit);
+	if (start != 0) res += "..." + separator;
+
+	for (int i = start; i < size; i++) {
+		res += std::to_string(array[i]);
+		if (i != size - 1) res += separator;
+	}
+
+	return res;
+}
+
 Stack::~Stack() {
 	delete [] array;
 }
