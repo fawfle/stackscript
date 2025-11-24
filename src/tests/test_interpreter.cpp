@@ -27,11 +27,13 @@ int main(int argc, char *argv[]) {
 
 	std::cout << "Dumping tokens..." << std::endl;
 	lexer.dump_tokens();
+	if (lexer.get_had_error()) return 1;
 
 	Parser parser = Parser(lexer.get_tokens());
 	
 	std::cout << "Dumping statements..." << std::endl;
 	parser.dump_statements();
+	if (parser.get_had_error()) return 1;
 
 	std::cout << "Running..." << std::endl;
 	Interpreter interpreter = Interpreter(parser.get_statements());

@@ -57,6 +57,7 @@ class Lexer {
 
 		void dump_tokens() const;
 		std::vector<Token> get_tokens() const { return tokens; }
+		bool get_had_error() const { return had_error; }
 };
 
 #endif

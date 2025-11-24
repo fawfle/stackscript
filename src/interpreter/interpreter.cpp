@@ -1,6 +1,8 @@
 #include "interpreter.hpp"
 #include <iostream>
 
+#define DEBUG true
+
 Interpreter::Interpreter(std::vector<Statement*> statements) {
 	this->statements = statements;
 	this->functions = new HashTable<std::string, Statement*>;
@@ -10,18 +12,47 @@ Interpreter::Interpreter(std::vector<Statement*> statements) {
 
 void Interpreter::execute() {
 	current = 0;
+	had_error = false;
 
 	while (!at_end()) {
-		statements.at(current)->evaluate(this);
+		Statement *statement = statements.at(current);
+		statement->evaluate(this);
 		current++;
+
+		if (DEBUG) {
+			std::cout << "[" << statement->to_string() << "] ";
+			dump_stack();
+		}
 
 		if (had_error) break;
 	}
 }
 
+void Interpreter::push(int val) {
+	stack->push(val);
+}
+
+int Interpreter::pop() {
+	if (stack->is_empty()) {
+		raise_error(current_statement()->line, "Cannot Pop, stack is empty.");
+		return -1;
+	}
+
+	return stack->pop();
+}
+
+int Interpreter::peek() {
+	if (stack->is_empty()) {
+		raise_error(current_statement()->line, "Cannot peek, stack is empty.");
+		return -1;
+	}
+
+	return stack->peek();
+}
+
 void Interpreter::call(std::string word) {
 	if (!functions->contains(word)) {
-		raise_error(statements.at(current)->line, "Call to unknown word " + word);
+		raise_error(current_statement()->line, "Call to unknown word " + word);
 	}
 
 	functions->get(word)->evaluate(this);
@@ -40,4 +71,8 @@ void Interpreter::register_function(FunctionStatement *function) {
 	}
 
 	functions->add(identifier.lexeme, function->get_statement());
+}
+
+void Interpreter::dump_stack() const {
+	std::cout << "STACK: " << stack->to_string("->") << std::endl;
 }

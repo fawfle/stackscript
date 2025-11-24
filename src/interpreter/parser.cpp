@@ -12,6 +12,7 @@ Parser::Parser(std::vector<Token> tokens) {
 void Parser::parse_statements() {
 	statements.clear();
 	current = 0;
+	had_error = false;
 
 	while(!at_end()) {
 		statements.push_back(parse_statement());
@@ -33,9 +34,8 @@ Statement *Parser::parse_statement() {
 			return parse_function_statement();
 		default:
 			// "string" print is interpreted as printing the whole string.
-			Token next = peek();
 			if (t.type == STRING && (match_and_consume(PRINT) || match_and_consume(CHAR_PRINT) || match_and_consume(PRINT_LN) || match_and_consume(CHAR_PRINT_LN))) {
-				return new PrintStatement(t, next.type == PRINT_LN || next.type == CHAR_PRINT_LN);
+				return new PrintStatement(t, previous().type == PRINT_LN || previous().type == CHAR_PRINT_LN);
 			}
 
 			// handle unexpected tokens
@@ -88,6 +88,11 @@ Statement *Parser::parse_block_statement() {
 		statements.push_back(parse_statement());
 	}
 
+	if (at_end()) {
+		raise_error((statements.size() > 0 ? statements.at(0)->line : -1), "Unclosed block statement.");
+		return nullptr;
+	}
+
 	return new BlockStatement(statements);
 }
 
@@ -99,8 +104,17 @@ bool Parser::match_and_consume(TokenType type) {
 	return true;
 }
 
+Token Parser::peek() const {
+	return tokens.at(current);
+}
+
+Token Parser::previous() const {
+	return tokens.at(current -1);
+}
+
 void Parser::dump_statements() const {
 	for (Statement *s : statements) {
+		if (s == nullptr) continue;
 		std::cout << s->to_string() << std::endl;
 	}
 }

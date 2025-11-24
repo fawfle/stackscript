@@ -2,6 +2,7 @@
 #include "interpreter.hpp"
 #include "token.hpp"
 #include <iostream>
+#include <queue>
 
 bool is_truthy(int n) {
 	return n != 0;
@@ -13,96 +14,95 @@ ExpressionStatement::ExpressionStatement(Token token) {
 }
 
 void ExpressionStatement::evaluate(Interpreter *interpreter) {
-	Stack *stack = interpreter->stack;
 
 	switch (token.type) {
 		case PLUS: {
-			int a = stack->pop();
-			int b = stack->pop();
-			stack->push(a + b);
+			int a = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(a + b);
 			break;
 		}
 		case MINUS: {
-			int a = stack->pop();
-			int b = stack->pop();
-			stack->push(b - a);
+			int a = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(b - a);
 			break;
 		}
 		case STAR: {
-			int a = stack->pop();
-			int b = stack->pop();
-			stack->push(a * b);
+			int a = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(a * b);
 			break;
 		}
 		case SLASH: {
-			int a = stack->pop();
-			int b = stack->pop();
-			stack->push(b / a);
+			int a = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(b / a);
 			break;
 		}
 		case AND: {
-			int a = stack->pop();
-			int b = stack->pop();
-			stack->push(is_truthy(a) && is_truthy(b) ? 1 : 0);
+			int a = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(is_truthy(a) && is_truthy(b) ? 1 : 0);
 			break;
 		}
 		case OR: {
-			int a = stack->pop();
-			int b = stack->pop();
-			stack->push(is_truthy(a) || is_truthy(b) ? 1 : 0);
+			int a = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(is_truthy(a) || is_truthy(b) ? 1 : 0);
 			break;
 			break;
 		}
 		case EQUAL: {
-			int a = stack->pop();
-			int b = stack->pop();
-			stack->push(a == b ? 1 : 0);
+			int a = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(a == b ? 1 : 0);
 			break;
 		}
 		case BANG_EQUAL: {
-			int a = stack->pop();
-			int b = stack->pop();
-			stack->push(a != b ? 1 : 0);
+			int a = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(a != b ? 1 : 0);
 			break;
 		}
 		case LESS: {
-			int a  = stack->pop();
-			int b = stack->pop();
-			stack->push(b < a);
+			int a  = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(b < a);
 			break;
 		}
 		case LESS_EQUAL: {
-			int a  = stack->pop();
-			int b = stack->pop();
-			stack->push(b <= a);
+			int a  = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(b <= a);
 			break;
 		}
 		case GREATER: {
-			int a  = stack->pop();
-			int b = stack->pop();
-			stack->push(b > a);
+			int a  = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(b > a);
 			break;
 		}
 		case GREATER_EQUAL: {
-			int a  = stack->pop();
-			int b = stack->pop();
-			stack->push(b >= a);
+			int a  = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(b >= a);
 			break;
 		}
 		case PRINT: {
-			std::cout << stack->pop();
+			std::cout << interpreter->pop();
 			break;
 		}
 		case CHAR_PRINT: {
-			std::cout << (char)stack->pop();
+			std::cout << (char)interpreter->pop();
 			break;
 		}
 		case PRINT_LN: {
-			std::cout << stack->pop() << std::endl;
+			std::cout << interpreter->pop() << std::endl;
 			break;
 		}
 		case CHAR_PRINT_LN: {
-			std::cout << (char)stack->pop() << std::endl;
+			std::cout << (char)interpreter->pop() << std::endl;
 			break;
 		}
 		case LN: {
@@ -110,46 +110,53 @@ void ExpressionStatement::evaluate(Interpreter *interpreter) {
 			break;
 		}
 		case PEEK: {
-			std::cout << stack->peek();
+			std::cout << interpreter->peek();
 			break;
 		}
 		case CHAR_PEEK: {
-			std::cout << (char)stack->peek();
+			std::cout << (char)interpreter->peek();
 			break;
 		}
 		// instructions
+		case DROP: {
+			interpreter->pop();
+			break;
+		}
 		case DUP: {
-			int a = stack->peek();
-			stack->push(a);
+			int a = interpreter->peek();
+			interpreter->push(a);
 			break;
 		}
 		case SWAP: {
-			int a  = stack->pop();
-			int b = stack->pop();
-			stack->push(a);
-			stack->push(b);
+			int a  = interpreter->pop();
+			int b = interpreter->pop();
+			interpreter->push(a);
+			interpreter->push(b);
 			break;
 		}
 		case N_SWAP: {
-			Stack s;
-			int n = stack->pop();
+			int n = interpreter->pop();
+			int *nums = new int[n];
+
 			for (int i = 0; i < n; i++) {
-				s.push(stack->pop());
+				nums[i] = (interpreter->pop());
 			}
 			for (int i = 0; i < n; i++) {
-				stack->push(s.pop());
+				interpreter->push(nums[i]);
 			}
+
+			delete [] nums;
 			break;
 		}
 		// literals
 		case NUMBER: {
-			stack->push(token.literal);
+			interpreter->push(token.literal);
 			break;
 		}
 		// when evaluated on own, adds a bunch of chars
 		case STRING: {
 			for (uint i = 0; i < token.lexeme.length(); i++) {
-				stack->push(token.lexeme[i]);
+				interpreter->push(token.lexeme[i]);
 			}
 		}
 		// identifier
@@ -161,13 +168,13 @@ void ExpressionStatement::evaluate(Interpreter *interpreter) {
 		case INPUT: {
 			std::string input;
 			std::cin >> input;
-			stack->push(std::stoi(input));
+			interpreter->push(std::stoi(input));
 		}
 		case CHAR_INPUT: {
 			std::string input;
 			std::cin >> input;
 			for (uint i = 0; i < input.length(); i++) {
-				stack->push(input[i]);
+				interpreter->push(input[i]);
 			}
 		}
 		default: {
@@ -200,7 +207,7 @@ IfStatement::~IfStatement() {
 }
 
 void IfStatement::evaluate(Interpreter *interpreter) {
-	int n = interpreter->stack->pop();
+	int n = interpreter->pop();
 	if (is_truthy(n)) {
 			then_branch->evaluate(interpreter);
 	} else if (else_branch != nullptr) {
@@ -209,7 +216,8 @@ void IfStatement::evaluate(Interpreter *interpreter) {
 }
 
 std::string IfStatement::to_string() {
-	std::string res = "(If Statement) THEN: [" + then_branch->to_string() + "]";
+	std::string res = "(If Statement)";
+	if (then_branch != nullptr) res += " THEN: [" + then_branch->to_string() + "]";
 	if (else_branch != nullptr) res += " ELSE: [" + else_branch->to_string() + "]";
 	return res;
 }
@@ -230,13 +238,15 @@ void FunctionStatement::evaluate(Interpreter *interpreter) {
 }
 
 std::string FunctionStatement::to_string() {
-	return "(Function) [" + statement->to_string() + "]"; 
+	std::string res = "(Function)";
+	if (statement != nullptr) res += " [" + statement->to_string() + "]";
+	return res;
 }
 
 BlockStatement::BlockStatement(std::vector<Statement*> statements) {
 	this->statements = statements;
 
-	this->line = statements.at(0)->line;
+	this->line = statements.size() > 0 ? statements.at(0)->line : -1;
 }
 
 BlockStatement::~BlockStatement() {

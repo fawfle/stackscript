@@ -2,10 +2,31 @@ DEF STARTING "Starting Program" println
 
 DEF SQUARE: dup *;
 
-DEF POW (n p -- 'n): 1 - 0 > IF swap dup * swap POW; ELSE drop;
+DEF TEST:
+	1 2 3 3 nswap drop drop drop
+;
+
+DEF TEST_2:
+	"hello" println
+;
+
+DEF POW (n p -- 'n):
+	swap dup 3 nswap POW_HELPER
+;
+
+DEF POW_HELPER (n x p -- x'):
+	1 - dup 0 > IF: 3 nswap dup 3 nswap * swap 3 nswap POW_HELPER; ELSE: drop swap drop;
+;
 
 STARTING
 
+TEST
+
 5 SQUARE println
 
+"Powers of 5" println
+
 5 2 POW println
+5 3 POW println
+5 4 POW println
+5 5 POW println

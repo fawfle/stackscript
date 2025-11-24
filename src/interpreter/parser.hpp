@@ -19,9 +19,10 @@ class Parser {
 		Statement *parse_function_statement();
 		Statement *parse_block_statement();
 
-		bool at_end() const { return peek().type == END; };
+		bool at_end() const { return (uint)current >= tokens.size() || peek().type == END; };
 
-		Token peek() const { return tokens.at(current); }
+		Token peek() const; 
+		Token previous() const;
 		bool match_and_consume(TokenType type);
 
 		bool had_error = false;
@@ -33,6 +34,7 @@ class Parser {
 		void dump_statements() const;
 
 		std::vector<Statement*> get_statements() const { return statements; };
+		bool get_had_error() { return had_error; }
 };
 
 #endif

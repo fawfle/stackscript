@@ -23,6 +23,12 @@ void test_stack(int size) {
 }
 
 int main(int argc, char *argv[]) {
+	Stack stack;
+	stack.push(1);
+	stack.push(2);
+	stack.push(3);
+	std::cout << stack.to_string("->", 2) << std::endl;
+
 	for (int i = 1; i < 30; i++) {
 		int num_elements = std::pow(2, i);
 
