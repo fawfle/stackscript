@@ -4,12 +4,16 @@
 StackScript is a [stack oriented](https://en.wikipedia.org/wiki/Stack-oriented_programming) programming language primarily inspired by the FORTH programming language. All working data is stored on a single stack of integers. The language has operators that act on the data on top of the stack (such as basic arithmetic operations), if and else statements for control flow, and functions in the form of words.
 
 ## **Syntax**
-All operators are in postfix notation. Instructions are separated by spaces and whitespace is ignored. Read rest for more details.
+All operators and statements are in postfix notation. Instructions are separated by spaces and whitespace is ignored. Read rest for more details.
 
 ```
 1 1 + # results in 2 on the stack
 10 3 - # results in 7 on the stack
-25 2 * # results in 50 on the stack
+25 2 > # results in 1 on the stack since 25 > 2
+
+5 REPEAT: 1; # adds 1 to the stack 5 times
+
+in 5 = IF: "equals 5" println; ELSE: "not 5" println; # accepts user input and prints if it's 5 or not
 ```
 
 ## **Literals**
