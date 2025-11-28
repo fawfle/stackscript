@@ -62,6 +62,11 @@ void ExpressionStatement::evaluate(Interpreter *interpreter) {
 			interpreter->push(a == b ? 1 : 0);
 			break;
 		}
+		case BANG: {
+			int a = interpreter->pop();
+			interpreter->push(is_truthy(a) ? 0 : 1);
+			break;
+		}
 		case BANG_EQUAL: {
 			int a = interpreter->pop();
 			int b = interpreter->pop();
