@@ -1,10 +1,9 @@
 #include "interpreter.hpp"
 #include <iostream>
 
-#define DEBUG true
-
-Interpreter::Interpreter(std::vector<Statement*> statements) {
+Interpreter::Interpreter(std::vector<Statement*> statements, bool debug) {
 	this->statements = statements;
+	this->debug = debug;
 	this->functions = new HashTable<std::string, Statement*>;
 
 	this->stack = new Stack();
@@ -19,7 +18,7 @@ void Interpreter::execute() {
 		statement->evaluate(this);
 		current++;
 
-		if (DEBUG) {
+		if (debug) {
 			std::cout << "[" << statement->to_string() << "] ";
 			dump_stack();
 		}
@@ -34,7 +33,7 @@ void Interpreter::push(int val) {
 
 int Interpreter::pop() {
 	if (stack->is_empty()) {
-		raise_error(current_statement()->line, "Cannot Pop, stack is empty.");
+		raise_error(current_statement()->line, "Cannot Pop, stack is empty");
 		return -1;
 	}
 
@@ -43,7 +42,7 @@ int Interpreter::pop() {
 
 int Interpreter::peek() {
 	if (stack->is_empty()) {
-		raise_error(current_statement()->line, "Cannot peek, stack is empty.");
+		raise_error(current_statement()->line, "Cannot peek, stack is empty");
 		return -1;
 	}
 

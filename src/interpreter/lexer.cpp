@@ -103,7 +103,7 @@ void Lexer::scan_token() {
 			if (at_end()) raise_error(line, "Possibly unmached comment \'(\'");
 			current++;
 			break;
-		case ')': raise_error(line, "Unexpected end to comment."); break;
+		case ')': raise_error(line, "Unexpected end to comment"); break;
 
 		case '+': add_token(PLUS); break;
 		case '-': add_token(MINUS); break;
@@ -163,7 +163,7 @@ void Lexer::scan_string() {
 	add_token(STRING);
 
 	if (at_end() || peek() == '\n') {
-		raise_error(line, "Unterminated string.");
+		raise_error(line, "Unterminated string");
 		return;
 	}
 

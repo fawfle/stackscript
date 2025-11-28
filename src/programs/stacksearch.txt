@@ -1,0 +1,11 @@
+# a searching algorithm
+
+PUT:
+;
+
+
+MAIN:
+input p
+;
+
+MAIN

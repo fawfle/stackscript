@@ -24,8 +24,10 @@ class Interpreter {
 	Statement *current_statement() { return statements.at(current); }
 	bool at_end() const { return (uint)current >= statements.size(); }
 
+	bool debug = false;
+
 	public:
-		Interpreter(std::vector<Statement*> statements);
+		Interpreter(std::vector<Statement*> statements, bool debug = false);
 
 		void execute();
 

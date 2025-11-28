@@ -69,7 +69,7 @@ Statement *Parser::parse_function_statement() {
 	// first token should be an identifier with the name
 	Token next = peek();
 	if (next.type != IDENTIFIER) {
-		raise_error(peek().line, "Expected identifier following function declaration.");
+		raise_error(peek().line, "Expected identifier following function declaration");
 		return nullptr;
 	}
 
@@ -89,7 +89,7 @@ Statement *Parser::parse_block_statement() {
 	}
 
 	if (at_end()) {
-		raise_error((statements.size() > 0 ? statements.at(0)->line : -1), "Unclosed block statement.");
+		raise_error((statements.size() > 0 ? statements.at(0)->line : -1), "Unclosed block statement");
 		return nullptr;
 	}
 

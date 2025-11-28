@@ -161,14 +161,14 @@ int HashTable<K, V>::find_key_index(K key) const {
 		if (entries[i] != nullptr && entries[i]->key == key) return i;
 	}
 
-	throw std::invalid_argument("failed to find key.");
+	throw std::invalid_argument("failed to find key in hash table.");
 }
 
 template <typename K, typename V>
 void HashTable<K, V>::add(K key, V value) {
 	int index = find_open_index(key);
 
-	if (entries != nullptr && entries[index] != nullptr) throw std::invalid_argument("attempting to add entry with key that already exists");
+	if (entries != nullptr && entries[index] != nullptr) throw std::invalid_argument("attempting to add entry to table with key that already exists");
 
 	num_elements++;
 
@@ -187,7 +187,7 @@ template <typename K, typename V>
 void HashTable<K, V>::set(K key, V value) {
 	int index = find_key_index(key);
 
-	if (entries[index] == nullptr) throw std::invalid_argument("attempting to set entry with key that doesn't exist");
+	if (entries[index] == nullptr) throw std::invalid_argument("attempting to set entry of table with key that doesn't exist");
 
 	entries[index]->value = value;
 }
@@ -195,7 +195,7 @@ void HashTable<K, V>::set(K key, V value) {
 template <typename K, typename V>
 V& HashTable<K, V>::get(K key) const {
 	auto entry = entries[find_key_index(key)];
-	if (entry == nullptr) throw std::invalid_argument("attempting to find entry wth key that doesn't exist");
+	if (entry == nullptr) throw std::invalid_argument("attempting to find entry wth key that doesn't exist in table");
 	return entry->value;
 }
 
@@ -203,7 +203,7 @@ template <typename K, typename V>
 void HashTable<K, V>::remove(K key) {
 	int index = find_key_index(key);
 
-	if (entries[index] == nullptr) throw std::invalid_argument("attempting to remove key that doesn't exist");
+	if (entries[index] == nullptr) throw std::invalid_argument("attempting to remove key that doesn't exist in table");
 
 	num_elements--;
 	delete entries[index];
