@@ -26,6 +26,7 @@ enum TokenType {
 
 	// keywords
 	IF, ELSE,
+	REPEAT, DO, WHILE,
 	DEF,
 	PRINT, CHAR_PRINT, PEEK, CHAR_PEEK,
 	LN, PRINT_LN, CHAR_PRINT_LN,

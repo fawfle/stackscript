@@ -30,6 +30,10 @@ Statement *Parser::parse_statement() {
 		case IF:
 			return parse_if_statement();
 			break;
+		case REPEAT:
+			return parse_repeat_statement();
+		case DO:
+			return parse_while_statement();
 		case DEF:
 			return parse_function_statement();
 		default:
@@ -41,6 +45,7 @@ Statement *Parser::parse_statement() {
 			// handle unexpected tokens
 			switch (t.type) {
 				case ELSE:
+				case WHILE:
 				case SEMICOLON:
 					raise_error(t.line, "Unexpected token '" + t.lexeme + "'");
 					return nullptr;
@@ -84,16 +89,37 @@ Statement *Parser::parse_block_statement() {
 	std::vector<Statement*> statements;
 
 	// go until ';'
-	while (!at_end() && !match_and_consume(SEMICOLON)) {
+	while (!at_end()) {
+		if (match_and_consume(SEMICOLON)) {
+			if (statements.size() == 0) {
+				raise_error(previous().line, "Empty block statement");
+				return nullptr;
+			}
+
+			return new BlockStatement(statements);
+		}
+
 		statements.push_back(parse_statement());
 	}
 
-	if (at_end()) {
-		raise_error((statements.size() > 0 ? statements.at(0)->line : -1), "Unclosed block statement");
-		return nullptr;
+	// reached end without hitting semicolon
+	raise_error((statements.size() > 0 ? statements.at(0)->line : -1), "Unclosed block statement");
+	return nullptr;
+}
+
+Statement *Parser::parse_repeat_statement() {
+	return new RepeatStatement(parse_statement());
+}
+
+Statement *Parser::parse_while_statement() {
+	Statement *statement = parse_statement();
+	if (match_and_consume(WHILE)) {
+		Statement *condition = parse_statement();
+		return new WhileStatement(statement, condition);
 	}
 
-	return new BlockStatement(statements);
+	raise_error(statement->line, "Expected WHILE after DO");
+	return nullptr;
 }
 
 bool Parser::match_and_consume(TokenType type) {

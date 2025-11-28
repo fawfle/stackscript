@@ -2,10 +2,14 @@
 #include "interpreter.hpp"
 #include "token.hpp"
 #include <iostream>
-#include <queue>
 
 bool is_truthy(int n) {
 	return n != 0;
+}
+
+void debug_log(Statement *statement, Interpreter *interpreter) {
+	std::cout << "[" << statement->to_string() << "] ";
+	interpreter->dump_stack();
 }
 
 ExpressionStatement::ExpressionStatement(Token token) {
@@ -14,7 +18,6 @@ ExpressionStatement::ExpressionStatement(Token token) {
 }
 
 void ExpressionStatement::evaluate(Interpreter *interpreter) {
-
 	switch (token.type) {
 		case PLUS: {
 			int a = interpreter->pop();
@@ -90,30 +93,41 @@ void ExpressionStatement::evaluate(Interpreter *interpreter) {
 			break;
 		}
 		case PRINT: {
-			std::cout << interpreter->pop();
+			int a = interpreter->pop();
+			if (interpreter->no_print) break;
+			std::cout << a;
 			break;
 		}
 		case CHAR_PRINT: {
-			std::cout << (char)interpreter->pop();
+			char c = (char)interpreter->pop();
+			if (interpreter->no_print) break;
+			std::cout << c;
 			break;
 		}
 		case PRINT_LN: {
-			std::cout << interpreter->pop() << std::endl;
+			int a = interpreter->pop();
+			if (interpreter->no_print) break;
+			std::cout << a << std::endl;
 			break;
 		}
 		case CHAR_PRINT_LN: {
-			std::cout << (char)interpreter->pop() << std::endl;
+			char c = (char)interpreter->pop();
+			if (interpreter->no_print) break;
+			std::cout << c << std::endl;
 			break;
 		}
 		case LN: {
+			if (interpreter->no_print) break;
 			std::cout << std::endl;
 			break;
 		}
 		case PEEK: {
+			if (interpreter->no_print) break;
 			std::cout << interpreter->peek();
 			break;
 		}
 		case CHAR_PEEK: {
+			if (interpreter->no_print) break;
 			std::cout << (char)interpreter->peek();
 			break;
 		}
@@ -158,6 +172,7 @@ void ExpressionStatement::evaluate(Interpreter *interpreter) {
 			for (uint i = 0; i < token.lexeme.length(); i++) {
 				interpreter->push(token.lexeme[i]);
 			}
+			break;
 		}
 		// identifier
 		case IDENTIFIER: {
@@ -167,20 +182,25 @@ void ExpressionStatement::evaluate(Interpreter *interpreter) {
 		// input
 		case INPUT: {
 			std::string input;
-			std::cin >> input;
+			*interpreter->get_istream() >> input;
 			interpreter->push(std::stoi(input));
+			break;
 		}
 		case CHAR_INPUT: {
 			std::string input;
-			std::cin >> input;
+			*interpreter->get_istream() >> input;
 			for (uint i = 0; i < input.length(); i++) {
 				interpreter->push(input[i]);
 			}
+			break;
 		}
 		default: {
-			interpreter->raise_error(token.line, "invalid expression statement token");
+			interpreter->raise_error(token.line, "invalid expression statement token: " + token.lexeme);
 		}
+		break;
 	}
+
+	if (interpreter->debug) debug_log(this, interpreter);
 }
 
 std::string ExpressionStatement::to_string() {
@@ -213,6 +233,8 @@ void IfStatement::evaluate(Interpreter *interpreter) {
 	} else if (else_branch != nullptr) {
 			else_branch->evaluate(interpreter);
 	}
+
+	if (interpreter->debug) debug_log(this, interpreter);
 }
 
 std::string IfStatement::to_string() {
@@ -265,6 +287,56 @@ std::string BlockStatement::to_string() {
 	return "(Block) length: " + std::to_string(statements.size());
 }
 
+RepeatStatement::RepeatStatement(Statement *statement) {
+	this->statement = statement;
+	
+	this->line = statement->line;
+}
+
+RepeatStatement::~RepeatStatement() {
+	delete statement;
+}
+
+void RepeatStatement::evaluate(Interpreter *interpreter) {
+	int n = interpreter->pop();
+	for (int i = 0; i < n; i++) {
+		interpreter->push(i);
+		statement->evaluate(interpreter);
+	}
+}
+
+std::string RepeatStatement::to_string() {
+	std::string res = "(Repeat)";
+	if (statement != nullptr) res += " [" + statement->to_string() + "]";
+	return res;
+}
+
+WhileStatement::WhileStatement(Statement *statement, Statement *condition) {
+	this->statement = statement;
+	this->condition = condition;
+	
+	this->line = statement->line;
+}
+
+WhileStatement::~WhileStatement() {
+	delete statement;
+	delete condition;
+}
+
+void WhileStatement::evaluate(Interpreter *interpreter) {
+	do {
+		statement->evaluate(interpreter);
+		condition->evaluate(interpreter);
+	} while (is_truthy(interpreter->pop()));
+}
+
+std::string WhileStatement::to_string() {
+	std::string res = "(While)";
+	if (statement != nullptr) res += " Statement: [" + statement->to_string() + "]";
+	if (condition != nullptr) res += " Condition: [" + condition->to_string() + "]";
+	return res;
+}
+
 PrintStatement::PrintStatement(Token string, bool new_line) {
 	this->string = string.lexeme;
 	this->new_line = new_line;
@@ -273,8 +345,12 @@ PrintStatement::PrintStatement(Token string, bool new_line) {
 }
 
 void PrintStatement::evaluate(Interpreter *interpreter) {
+	if (interpreter->no_print) return;
+
 	std::cout << string;
 	if (new_line) std::cout << std::endl;
+
+	if (interpreter->debug) debug_log(this, interpreter);
 }
 
 std::string PrintStatement::to_string() {

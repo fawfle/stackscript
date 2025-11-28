@@ -60,6 +60,28 @@ class BlockStatement : public Statement {
 		std::string to_string() override;
 };
 
+class RepeatStatement : public Statement {
+	Statement *statement = nullptr;
+	public:
+		RepeatStatement(Statement *statement);
+		~RepeatStatement();
+
+		void evaluate(Interpreter *interpreter) override;
+		std::string to_string() override;
+};
+
+class WhileStatement : public Statement {
+	Statement *statement = nullptr;
+	Statement *condition = nullptr;
+
+	public:
+		WhileStatement(Statement *statement, Statement *condition);
+		~WhileStatement();
+
+	void evaluate(Interpreter *interpreter) override;
+	std::string to_string() override;
+};
+
 class PrintStatement : public Statement {
 	std::string string;
 	bool new_line = false;

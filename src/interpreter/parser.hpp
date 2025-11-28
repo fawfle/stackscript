@@ -18,6 +18,8 @@ class Parser {
 		Statement *parse_if_statement();
 		Statement *parse_function_statement();
 		Statement *parse_block_statement();
+		Statement *parse_repeat_statement();
+		Statement *parse_while_statement();
 
 		bool at_end() const { return (uint)current >= tokens.size() || peek().type == END; };
 

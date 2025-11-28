@@ -15,6 +15,8 @@ class Interpreter {
 	std::vector<Statement*> statements;
 	HashTable<std::string, Statement*> *functions;
 
+	std::istream *istream = &std::cin;
+
 	Stack *stack;
 
 	int current = 0;
@@ -24,10 +26,9 @@ class Interpreter {
 	Statement *current_statement() { return statements.at(current); }
 	bool at_end() const { return (uint)current >= statements.size(); }
 
-	bool debug = false;
-
 	public:
 		Interpreter(std::vector<Statement*> statements, bool debug = false);
+		Interpreter(std::vector<Statement*> statements, std::istream *istream, bool debug = false);
 
 		void execute();
 
@@ -42,7 +43,13 @@ class Interpreter {
 		void raise_error(int line, std::string message);
 		bool get_had_error() const { return had_error; }
 
+		std::istream *get_istream() { return istream; };
+
 		void dump_stack() const;
+
+		bool debug = false;
+		// flag for supressing print statements when testing
+		bool no_print = false;
 };
 
 #endif

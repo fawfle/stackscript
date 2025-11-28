@@ -25,7 +25,7 @@ std::string token_type_to_string(TokenType type) {
 		case EQUAL: return "EQUAL";
 		case GREATER: return "GREATER"; case GREATER_EQUAL: return "GREATER_EQUAL"; case LESS: return "LESS"; case LESS_EQUAL: return "LESS_EQUAL";
 		case IDENTIFIER: return "IDENTIFIER"; case NUMBER: return "NUMBER"; case STRING: return "STRING";
-		case IF: return "IF"; case ELSE: return "ELSE";
+		case IF: return "IF"; case ELSE: return "ELSE"; case REPEAT: return "REPEAT"; case DO: return "DO"; case WHILE: return "WHILE";
 		case DEF: return "DEF";
 		case PRINT: return "PRINT"; case CHAR_PRINT: return "CHAR_PRINT"; case PEEK: return "PEEK"; case CHAR_PEEK: return "CHAR_PEEK"; case PRINT_LN: return "PRINT_LN"; case CHAR_PRINT_LN: return "CHAR_PRINT_LN"; case LN: return "LN";
 		case INPUT: return "INPUT"; case CHAR_INPUT: return "CHAR_INPUT";
@@ -39,6 +39,9 @@ std::string token_type_to_string(TokenType type) {
 KeywordContainer::KeywordContainer() {
 	keywords.add("IF", IF);
 	keywords.add("ELSE", ELSE);
+	keywords.add("REPEAT", REPEAT);
+	keywords.add("DO", DO);
+	keywords.add("WHILE", WHILE);
 	keywords.add("DEF", DEF);
 	keywords.add("print", PRINT);
 	keywords.add("cprint", CHAR_PRINT);

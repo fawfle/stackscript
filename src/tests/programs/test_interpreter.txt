@@ -24,9 +24,16 @@ TEST
 
 5 SQUARE println
 
+"n squared" println
+5 REPEAT: SQUARE println;
+
 "Powers of 5" println
 
 5 2 POW println
 5 3 POW println
 5 4 POW println
 5 5 POW println
+
+"n to the 5 loop" println
+
+0 DO: 1 + dup 5 POW println; WHILE: dup 10 <=;

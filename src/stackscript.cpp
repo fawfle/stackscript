@@ -2,6 +2,7 @@
 #include "./interpreter/parser.hpp"
 #include "./interpreter/interpreter.hpp"
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -21,12 +22,21 @@ int main(int argc, char *argv[]) {
 	}
 
 	std::string program_name = argv[1];
+	bool debug = false;
+
+	// look for flags
+	for (int i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "-d") == 0) debug = true;
+	}
 
 	std::ifstream input_file{"./src/programs/" + program_name + ".txt"};
 	
 	if (!input_file.is_open()) {
 		std::cerr << "Error opening file." << std::endl;
+		return 1;
 	}
+
+	if (debug) std::cout << "DEBUG MODE ENABLED\n";
 
 	std::string file_string = slurp(input_file);
 	Lexer lexer = Lexer(file_string);
@@ -42,7 +52,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	Interpreter interpreter = Interpreter(parser.get_statements());
+	Interpreter interpreter = Interpreter(parser.get_statements(), debug);
 
 	interpreter.execute();
 }

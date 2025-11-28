@@ -1,11 +1,31 @@
-# a searching algorithm
-
-PUT:
+# accept input and put on stack
+DEF PUT:
+	"Enter a number" println
+	in
 ;
 
-
-MAIN:
-input p
+# search stack for input
+DEF SEARCH:
+	"Enter a number" println
+	in
 ;
 
-MAIN
+DEF CHECK_N:
+	print
+;
+
+# main loop
+DEF MAIN:
+	"a to add, s to search, e to exit" println
+	cin
+	dup "a" = IF:
+		drop PUT 0;
+	ELSE: 
+		dup "s" = IF: drop SEARCH 0;
+		ELSE:
+			dup "e" != IF: drop 0; ELSE: drop 1;
+		;
+	;
+;
+
+DO: MAIN; WHILE: != 1;

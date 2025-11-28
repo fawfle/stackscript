@@ -20,6 +20,8 @@ LEXER_TEST = ./build/lexer_test
 PARSER_TEST = ./build/parser_test
 INTERPRETER_TEST = ./build/interpreter_test
 
+STACKSCRIPT_QUEUE_TEST = ./build/ss_queue_test
+
 STACKSCRIPT_EXECUTABLE = ./build/stackscript
 
 all: executable tests
@@ -31,6 +33,9 @@ tests: $(OBJ_FILES) | directories
 	@$(GXX) $(CXXFLAGS) ./src/tests/test_lexer.cpp $(OBJ_FILES) -o $(LEXER_TEST)
 	@$(GXX) $(CXXFLAGS) ./src/tests/test_parser.cpp $(OBJ_FILES) -o $(PARSER_TEST)
 	@$(GXX) $(CXXFLAGS) ./src/tests/test_interpreter.cpp $(OBJ_FILES) -o $(INTERPRETER_TEST)
+
+	@echo making program test files
+	@$(GXX) $(CXXFLAGS) ./src/tests/test_stackscript_queue.cpp $(OBJ_FILES) -o $(STACKSCRIPT_QUEUE_TEST)
 
 executable: $(OBJ_FILES) | directories
 	@echo making stackscript executable

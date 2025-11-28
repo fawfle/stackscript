@@ -1,0 +1,53 @@
+DEF ENQUEUE:
+	# increment size
+	1 +
+	dup 1 + nswap
+	1 +
+	dup 1 + nswap
+	"enter a number" println
+	in swap
+;
+
+DEF DEQUEUE:
+	# check zero length
+	dup 0 != IF:
+		dup 2 + nswap
+		swap
+		"dequeueing: " print println
+		1 -
+		dup 2 + nswap
+		1 -
+	; ELSE: "queue is empty" println;
+;
+
+# basically identical to dequeue
+DEF PEEK:
+	# check zero length
+	dup 0 != IF:
+		dup 2 + nswap
+		swap dup
+		"front: " print println
+		swap
+		dup 2 + nswap
+	; ELSE: "queue is empty" println;
+;
+
+DEF MAIN:
+	"a to enqueue, p to peek, d to dequeue, e to exit" println
+
+	cin
+	dup "a" = IF: drop ENQUEUE 0;
+	ELSE:
+		dup "d" = IF: drop DEQUEUE 0;
+		ELSE:
+			dup "p" = IF: drop PEEK 0;
+			ELSE:
+				dup "e" != IF: drop 0; ELSE: drop 1;
+			;
+		;
+	;
+;
+
+# size of queue
+0 0
+DO: MAIN; WHILE: 1 !=;

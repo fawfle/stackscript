@@ -40,7 +40,7 @@ Words could be reusable functions that are just a list of other instructions. Pa
 
 ```
 # takes in a single number on the stack and squares it
-SQUARE (n): dup *
+SQUARE (n): dup *;
 
 # raises the number on the top of the stack to the next number on the stack
 DEF POW (n p -- 'n):
