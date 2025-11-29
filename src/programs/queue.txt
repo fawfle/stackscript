@@ -13,7 +13,7 @@ DEF DEQUEUE:
 	dup 0 != IF:
 		dup 2 + nswap
 		swap
-		"dequeueing: " print println
+		"dequeuing: " print println
 		1 -
 		dup 2 + nswap
 		1 -
