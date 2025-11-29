@@ -34,6 +34,7 @@ double test_queue(Interpreter &interpreter, std::stringstream &ss, int size) {
 
 	auto end_time = std::chrono::high_resolution_clock::now();
 	double elapsed_microseconds = std::chrono::duration<double, std::micro>(end_time - start_time).count();
+	// since we enqueue and dequeue EVERY element, we perform size * 2 operations which is proportional to the size.
 	double microseconds_per_op = elapsed_microseconds / size;
 
 	return microseconds_per_op;

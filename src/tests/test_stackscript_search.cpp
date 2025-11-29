@@ -23,7 +23,6 @@ double test_queue(Interpreter &interpreter, std::stringstream &ss, int size, int
 		ss << "a " + std::to_string(i) + " ";
 	}
 
-	// search for 10 random elements
 	for (int i = 0; i < searches; i++) {
 		ss << "s " << std::rand() % size << " ";
 	}
@@ -36,6 +35,7 @@ double test_queue(Interpreter &interpreter, std::stringstream &ss, int size, int
 
 	auto end_time = std::chrono::high_resolution_clock::now();
 	double elapsed_microseconds = std::chrono::duration<double, std::micro>(end_time - start_time).count();
+	// since the time complexity for search is O(n^2), we perform fewer searches. It should still average to the time complexity.
 	double microseconds_per_op = elapsed_microseconds / searches;
 
 	return microseconds_per_op;
