@@ -1,0 +1,54 @@
+DEF DUP_2 (n -- n n):
+	dup 3 nswap dup 4 nswap 3 nswap swap
+;
+
+DEF PUT:
+	# increment size
+	1 + dup 1 + nswap 1 + dup 1 + nswap
+	"Enter a number" println
+	in swap
+;
+
+# search stack for input
+DEF SEARCH:
+	# dup front and back
+	dup dup 3 + nswap dup dup 4 + nswap
+	"Enter a number" println
+	in
+	swap dup 4 + nswap 1 + nswap dup
+
+	DO (n a ... n -- n' ... f n'): CHECK_N swap;
+	WHILE (f n -- n):
+		 # terminate if found or checked every elt
+		DUP_2 0 <= || ! IF: swap drop 1; ELSE: drop 0;
+	;
+
+	IF: "found" println; ELSE: "not found" println;
+;
+
+# checks if nth element is a. Cleans up on find or end
+DEF CHECK_N (n a C ... n -- C n' ... a n' f):
+	dup 4 + nswap
+	3 nswap DUP_2 = IF: drop swap 2 + nswap 1; # found
+	ELSE: # not found
+		3 nswap 1 - 
+		dup 0 != IF: dup 3 nswap 4 nswap swap 5 + nswap 1 - 0;
+		ELSE: drop drop 3 nswap drop 0 0;
+	;
+;
+
+# main loop
+DEF MAIN:
+	"a to add, s to search, e to exit" println
+	cin
+	dup "a" = IF:
+		drop PUT 0;
+	ELSE: 
+		dup "s" = IF: drop SEARCH 0;
+		ELSE:
+			dup "e" != IF: drop 0; ELSE: drop 1;
+		;
+	;
+;
+
+0 0 DO: MAIN; WHILE: 1 !=;

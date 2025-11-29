@@ -38,6 +38,7 @@ int main(int argc, char *argv[]) {
 
 		auto end_time = std::chrono::high_resolution_clock::now();
 		double elapsed_microseconds = std::chrono::duration<double, std::micro>(end_time - start_time).count();
+		// since we add num_elements elements and the remove num_elements elements, the number of operations is always proportional to num_elements.
 		double microseconds_per_op = elapsed_microseconds / num_elements;
 
 		std::cout << "For num_elements: " << num_elements << " (2^" << i << ") μs per operation is: " << microseconds_per_op << std::endl;

@@ -21,6 +21,7 @@ PARSER_TEST = ./build/parser_test
 INTERPRETER_TEST = ./build/interpreter_test
 
 STACKSCRIPT_QUEUE_TEST = ./build/ss_queue_test
+STACKSCRIPT_SEARCH_TEST = ./build/ss_search_test
 
 STACKSCRIPT_EXECUTABLE = ./build/stackscript
 
@@ -36,6 +37,7 @@ tests: $(OBJ_FILES) | directories
 
 	@echo making program test files
 	@$(GXX) $(CXXFLAGS) ./src/tests/test_stackscript_queue.cpp $(OBJ_FILES) -o $(STACKSCRIPT_QUEUE_TEST)
+	@$(GXX) $(CXXFLAGS) ./src/tests/test_stackscript_search.cpp $(OBJ_FILES) -o $(STACKSCRIPT_SEARCH_TEST)
 
 executable: $(OBJ_FILES) | directories
 	@echo making stackscript executable

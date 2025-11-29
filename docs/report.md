@@ -59,6 +59,13 @@ We have direct access to the top of the stack because we have direct access to t
 
 ## **Testing Strategy**
 
+### Data Structures
+All code is empirically tested by performing operations on the target and observing how the computation time increases as the data size increases. For the stacks and hash tables a certain amount of elements are added, then a certain amount of operations are performed and the time per operation is calculated as time/operations. The code also tests that the data structure has expected results. For the stack, it makes sure the values at every location match when they were added. For the hash table, it makes sure that keys return the correct value.
+
+
+### StackScript
+The StackScript code is also tested for time complexity and matches the expected complexity. The testing for the StackScript programs is similar and performs operations on stacks of varying sizes. Due to the interactive nature of the programs, the tests only check the amount of time per operation, not whether or not the structure acts as expected. The StackScript programs were instead tested by hand.
+
 ## **When Does the Chosen Data Structure Fail?**
 
 ## **Limitations and future work**

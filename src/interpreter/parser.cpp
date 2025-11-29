@@ -118,8 +118,7 @@ Statement *Parser::parse_while_statement() {
 		return new WhileStatement(statement, condition);
 	}
 
-	raise_error(statement->line, "Expected WHILE after DO");
-	return nullptr;
+	return new WhileStatement(statement, nullptr);
 }
 
 bool Parser::match_and_consume(TokenType type) {

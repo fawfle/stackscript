@@ -74,6 +74,7 @@ int main(int argc, char *argv[]) {
 
 		auto end_time = std::chrono::high_resolution_clock::now();
 		double elapsed_microseconds = std::chrono::duration<double, std::micro>(end_time - start_time).count();
+		// since we perform an operation per entry (add, check all keys, remove all) the time per operation is proportional to the number of entries.
 		double microseconds_per_entry = elapsed_microseconds / num_entries;
 
 		std::cout << "For num_entries: " << num_entries << " (2^" << i << ") μs per operation is: " << microseconds_per_entry << std::endl;

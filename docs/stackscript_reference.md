@@ -43,7 +43,7 @@ StackScript supports integer literals and strings to a limited extent. Any numbe
 - \[input | in\] accepts a number input from the user.
 - \[cinput | cin\] accepts a char input from the user. The char is converted to an integer.
 - \[print | p\] (a -- ) prints the top value of the stack and removes it
-- \[cprint | c\] (a -- ) prints the top value of the stack as if it was a char and removes it
+- \[cprint | cp\] (a -- ) prints the top value of the stack as if it was a char and removes it
 - \[peek / cpeek\] (a -- a) prints the top value of the stack without removing it
 - \[ln\] prints a new line
 - \[println | cln / cprintln | cpln\] prints with new line
@@ -79,7 +79,7 @@ Repeat loops have the form `n REPEAT statement` where the statement is repeated 
 ```
 
 ### Do While Loops
-Do while loops have the form `DO statement WHILE condition` where the statement is executed, followed by the condition statement. The loop finally checks if the top element is truthy (consuming it in the process) and repeats the whole process if it is. Because of the way StackScript works, the `WHILE` part is essentailly syntactic sugar to make the condition more readable.
+Do while loops have the form `DO statement WHILE condition` where the statement is executed, followed by the condition statement. The loop finally checks if the top element is truthy (consuming it in the process) and repeats the whole process if it is. Because of the way StackScript works, the `WHILE` part is essentailly syntactic sugar to make the intention of the condition more readable. Therefore the `WHILE` clause can be omitted and written as `DO statement` where the statement includes both the `statement` and `condition`.
 
 ```
 # continually read input until the user enters "e"

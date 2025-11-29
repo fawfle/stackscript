@@ -308,6 +308,8 @@ void RepeatStatement::evaluate(Interpreter *interpreter) {
 		interpreter->push(i);
 		statement->evaluate(interpreter);
 	}
+
+	if (interpreter->debug) debug_log(this, interpreter);
 }
 
 std::string RepeatStatement::to_string() {
@@ -325,14 +327,16 @@ WhileStatement::WhileStatement(Statement *statement, Statement *condition) {
 
 WhileStatement::~WhileStatement() {
 	delete statement;
-	delete condition;
+	if (condition != nullptr) delete condition;
 }
 
 void WhileStatement::evaluate(Interpreter *interpreter) {
 	do {
 		statement->evaluate(interpreter);
-		condition->evaluate(interpreter);
+		if (condition != nullptr) condition->evaluate(interpreter);
 	} while (is_truthy(interpreter->pop()));
+
+	if (interpreter->debug) debug_log(this, interpreter);
 }
 
 std::string WhileStatement::to_string() {
