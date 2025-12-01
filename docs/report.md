@@ -84,4 +84,8 @@ For example, in Python, the interpreter uses the order of operations as a guide 
 
 ## **Limitations and future work**
 
+So far, StackScript has many essential programming features present in the most used programming languages. For example, it supports functions, loops (to a certain extent), and conditionals. Additionally, it has the ability to accept input and print out statements.
 
+One feature we have not implemented yet is Object Oriented Programming. This is an extremely important feature because it allows the user to create custom classes, objects, and even other data structures that are not inherently supported by StackScript. Additionally, the level of modularity allowed by classes is powerful for making code reusable and readable.
+
+One limitation of this is that it is difficult and complicated to create extensions of stack-oriented programming languages like StackScript. The convoluted syntax of stack-oriented languages like StackScript makes the nature of them more rigid to work with.
