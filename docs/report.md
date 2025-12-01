@@ -8,19 +8,19 @@ We will create a programming language interpreter that follows the stack oriente
 ## **Related Data Structure Alternatives**
 
 ### Stacks (Chosen Data Structure)
-The programming language is a stack-based language because the syntax becomes simple. For example, to evaluate '1+2', the syntax for this language would become:
+The programming language is a stack-based language because the syntax becomes simple. For example, to evaluate `1+2`, the syntax for this language would become:
 
-'1 2 + println'
+`1 2 + println`
 
-To evaluate this, the stack would first add 1 and 2 to the stack. The stack now holds the values [1,2], where the last element is the top of the stack. When the '+' arrives, the 2 and 1 will be popped from the stack and added. Then, the resulting value (3) will be added to the stack. When the println comes, the 3 will be popped from the stack and then printed.
+To evaluate this, the stack would first add 1 and 2 to the stack. The stack now holds the values [1,2], where the last element is the top of the stack. When the `+` arrives, the 2 and 1 will be popped from the stack and added. Then, the resulting value (3) will be added to the stack. When the println comes, the 3 will be popped from the stack and then printed.
 
 ### Dynamic Arrays
 The stack is being implemented through dynamic arrays. One benefit of using dynamic arrays to implement stacks is that it is efficient to add elements at the end of the array and pop them off from the end of the array.
 
-Although dynamic arrays are used to implement the stack, they were not used in their raw form. This is because it is much easier and understandable to use 'peek()', 'pop()', and 'push()' methods than consistently accessing the last element in the array. Moreover, having the stack automatically resize itself when using the 'push()' method makes programming much easier for the programmer. The abstraction of a stack class makes the program readable and avoids the need of implementing the functions every time.
+Although dynamic arrays are used to implement the stack, they were not used in their raw form. This is because it is much easier and understandable to use `peek()`, `pop()`, and `push()` methods than consistently accessing the last element in the array. Moreover, having the stack automatically resize itself when using the `push()` method makes programming much easier for the programmer. The abstraction of a stack class makes the program readable and avoids the need of implementing the functions every time.
 
 ### Queues
-Queues are similar to stacks in that they use peek(), pop(), and push() methods to access, delete, and add only either the first or last element in the queue. However, the "First In First Out" property of a queue makes it less appealing than a stack, which has a "Last In First Out" property. One reason for this is that order of operation controllers are much better implemented with stacks. For example, the syntax '(2 3 4 + * PRINT)' can be evaluated like this:
+Queues are similar to stacks in that they use peek(), pop(), and push() methods to access, delete, and add only either the first or last element in the queue. However, the "First In First Out" property of a queue makes it less appealing than a stack, which has a "Last In First Out" property. One reason for this is that order of operation controllers are much better implemented with stacks. For example, the syntax `(2 3 4 + * PRINT)` can be evaluated like this:
 
 1. Stack: [2, 3, 4]
 2. To add, pop off 4 and 3 and add them, resulting in 7.
@@ -68,13 +68,13 @@ The StackScript code is also tested for time complexity and matches the expected
 
 ## **When Does the Chosen Data Structure Fail?**
 
-The syntax of StackScript is inherently based off the stack data structure. As a result, the syntax of StackScript can be awkward to use from a user standpoint. For example, in a programming language like Python, the syntax to print '(2+4) * 5' is as follows:
+The syntax of StackScript is inherently based off the stack data structure. As a result, the syntax of StackScript can be awkward to use from a user standpoint. For example, in a programming language like Python, the syntax to print `(2+4) * 5` is as follows:
 
-'print((2+4) * 5)'
+`print((2+4) * 5)`
 
 This syntax is very straightforward because it reads how you would read a math expression. For example, the parentheses govern which operation is executed first. However, the stack-based syntax of StackScript makes it much harder to read. The same code above in python would look like this in StackScript:
 
-'2 4 + 5 * println'
+`2 4 + 5 * println`
 
 While this is readable so far, the expression can get complicated very fast when more functions are added. Although user defined functions can be made to increase readability and modularity, this can become tedious.
 
