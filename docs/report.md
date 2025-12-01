@@ -22,14 +22,12 @@ Although dynamic arrays are used to implement the stack, they were not used in t
 ### Queues
 Queues are similar to stacks in that they use `peek()`, `pop()`, and `push()` methods to access, delete, and add only either the first or last element in the queue. However, the "First In First Out" property of a queue makes it less appealing than a stack, which has a "Last In First Out" property. One reason for this is that order of operation controllers are much better implemented with stacks. For example, the syntax `(2 3 4 + * PRINT)` can be evaluated like this:
 
-```
-1. Stack: [2, 3, 4]
-2. To add, pop off 4 and 3 and add them, resulting in 7.
-3. Add 7 to the stack: [2,7]
-4. Pop off 7 and 2 and multiply them, resulting in 14.
-5. Add 14 to the stack: [14]
-6. Print 14.
-```
+1. Stack: `[2, 3, 4]`
+2. To add, pop off `4` and `3` and add them, resulting in `7`.
+3. Add `7` to the stack: `[2,7]`
+4. Pop off `7` and `2` and multiply them, resulting in `14`.
+5. Add `14` to the stack: `[14]`
+6. Print `14`.
 
 ### Hash Table (Chosen for Variable Storage)
 Hash tables used to store variable pointers. This is because accessing pointers to variables via a hash function is very efficient time-wise.
