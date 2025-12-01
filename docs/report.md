@@ -68,4 +68,20 @@ The StackScript code is also tested for time complexity and matches the expected
 
 ## **When Does the Chosen Data Structure Fail?**
 
+The syntax of StackScript is inherently based off the stack data structure. As a result, the syntax of StackScript can be awkward to use from a user standpoint. For example, in a programming language like Python, the syntax to print (2+4) * 5 is as follows:
+
+print((2+4) * 5)
+
+This syntax is very straightforward because it reads how you would read a math expression. For example, the parentheses govern which operation is executed first. However, the stack-based syntax of StackScript makes it much harder to read. The same code above in python would look like this in StackScript:
+
+2 4 + 5 * println
+
+While this is readable so far, the expression can get complicated very fast when more functions are added. Although user defined functions can be made to increase readability and modularity, this can become tedious.
+
+On the flip side, the stack-oriented syntax makes nesting operations very easy. Rather than needing a vast number of parentheses to control order of operations, the user can type just numbers and operations on a single line and control exactly what operations they want to compute at what time.
+
+For example, in Python, the interpreter uses the order of operations as a guide for what to compute first. For example, addition comes after multiplication, and everything comes after parentheses. Because the top of the stack determines what operations happen first in StackScript, there is no confusion in what happens in what order.
+
 ## **Limitations and future work**
+
+

@@ -79,7 +79,7 @@ Repeat loops have the form `n REPEAT statement` where the statement is repeated 
 ```
 
 ### Do While Loops
-Do while loops have the form `DO statement WHILE condition` where the statement is executed, followed by the condition statement. The loop finally checks if the top element is truthy (consuming it in the process) and repeats the whole process if it is. Because of the way StackScript works, the `WHILE` part is essentailly syntactic sugar to make the intention of the condition more readable. Therefore the `WHILE` clause can be omitted and written as `DO statement` where the statement includes both the `statement` and `condition`.
+Do while loops have the form `DO statement WHILE condition` where the statement is executed, followed by the condition statement. The loop finally checks if the top element is truthy (consuming it in the process) and repeats the whole process if it is. Because of the way StackScript works, the `WHILE` part is essentially syntactic sugar to make the intention of the condition more readable. Therefore the `WHILE` clause can be omitted and written as `DO statement` where the statement includes both the `statement` and `condition`.
 
 ```
 # continually read input until the user enters "e"
