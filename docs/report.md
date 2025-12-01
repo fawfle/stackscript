@@ -12,7 +12,7 @@ The programming language is a stack-based language because the syntax becomes si
 
 `1 2 + println`
 
-To evaluate this, the stack would first add 1 and 2 to the stack. The stack now holds the values [1,2], where the last element is the top of the stack. When the `+` arrives, the 2 and 1 will be popped from the stack and added. Then, the resulting value (3) will be added to the stack. When the println comes, the 3 will be popped from the stack and then printed.
+To evaluate this, the stack would first add `1` and `2` to the stack. The stack now holds the values `[1,2]`, where the last element is the top of the stack. When the `+` arrives, the `2` and `1` will be popped from the stack and added. Then, the resulting value, `3`, will be added to the stack. When the println comes, the `3` will be popped from the stack and then printed.
 
 ### Dynamic Arrays
 The stack is being implemented through dynamic arrays. One benefit of using dynamic arrays to implement stacks is that it is efficient to add elements at the end of the array and pop them off from the end of the array.
@@ -20,7 +20,7 @@ The stack is being implemented through dynamic arrays. One benefit of using dyna
 Although dynamic arrays are used to implement the stack, they were not used in their raw form. This is because it is much easier and understandable to use `peek()`, `pop()`, and `push()` methods than consistently accessing the last element in the array. Moreover, having the stack automatically resize itself when using the `push()` method makes programming much easier for the programmer. The abstraction of a stack class makes the program readable and avoids the need of implementing the functions every time.
 
 ### Queues
-Queues are similar to stacks in that they use peek(), pop(), and push() methods to access, delete, and add only either the first or last element in the queue. However, the "First In First Out" property of a queue makes it less appealing than a stack, which has a "Last In First Out" property. One reason for this is that order of operation controllers are much better implemented with stacks. For example, the syntax `(2 3 4 + * PRINT)` can be evaluated like this:
+Queues are similar to stacks in that they use `peek()`, `pop()`, and `push()` methods to access, delete, and add only either the first or last element in the queue. However, the "First In First Out" property of a queue makes it less appealing than a stack, which has a "Last In First Out" property. One reason for this is that order of operation controllers are much better implemented with stacks. For example, the syntax `(2 3 4 + * PRINT)` can be evaluated like this:
 
 1. Stack: [2, 3, 4]
 2. To add, pop off 4 and 3 and add them, resulting in 7.
