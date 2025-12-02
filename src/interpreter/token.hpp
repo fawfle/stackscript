@@ -34,6 +34,7 @@ enum TokenType {
 	DUP,
 	SWAP, N_SWAP,
 	INPUT, CHAR_INPUT,
+	DUMP,
 
 	// comments
 	// HASHTAG,

@@ -22,6 +22,8 @@ INTERPRETER_TEST = ./build/interpreter_test
 
 STACKSCRIPT_QUEUE_TEST = ./build/ss_queue_test
 STACKSCRIPT_SEARCH_TEST = ./build/ss_search_test
+STACKSCRIPT_INSORT_TEST = ./build/ss_insort_test
+STACKSCRIPT_SORT_TEST = ./build/ss_sort_test
 
 STACKSCRIPT_EXECUTABLE = ./build/stackscript
 
@@ -38,6 +40,8 @@ tests: $(OBJ_FILES) | directories
 	@echo making program test files
 	@$(GXX) $(CXXFLAGS) ./src/tests/test_stackscript_queue.cpp $(OBJ_FILES) -o $(STACKSCRIPT_QUEUE_TEST)
 	@$(GXX) $(CXXFLAGS) ./src/tests/test_stackscript_search.cpp $(OBJ_FILES) -o $(STACKSCRIPT_SEARCH_TEST)
+	@$(GXX) $(CXXFLAGS) ./src/tests/test_stackscript_insort.cpp $(OBJ_FILES) -o $(STACKSCRIPT_INSORT_TEST)
+	@$(GXX) $(CXXFLAGS) ./src/tests/test_stackscript_sort.cpp $(OBJ_FILES) -o $(STACKSCRIPT_SORT_TEST)
 
 executable: $(OBJ_FILES) | directories
 	@echo making stackscript executable

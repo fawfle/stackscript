@@ -22,11 +22,12 @@ int main(int argc, char *argv[]) {
 	}
 
 	std::string program_name = argv[1];
-	bool debug = false;
+	DebugLevel debug_level = NONE;
 
 	// look for flags
 	for (int i = 0; i < argc; i++) {
-		if (strcmp(argv[i], "-d") == 0) debug = true;
+		if (strcmp(argv[i], "-d") == 0) debug_level = NORMAL;
+		if (strcmp(argv[i], "-da") == 0) debug_level = ALL;
 	}
 
 	std::ifstream input_file{"./src/programs/" + program_name + ".txt"};
@@ -36,7 +37,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	if (debug) std::cout << "DEBUG MODE ENABLED\n";
+	if (debug_level > NONE) std::cout << "DEBUG MODE ENABLED [" << (debug_level == ALL ? "ALL" : "NORMAL") << "]\n";
 
 	std::string file_string = slurp(input_file);
 	Lexer lexer = Lexer(file_string);
@@ -52,7 +53,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	Interpreter interpreter = Interpreter(parser.get_statements(), debug);
+	Interpreter interpreter = Interpreter(parser.get_statements(), debug_level);
 
 	interpreter.execute();
 }

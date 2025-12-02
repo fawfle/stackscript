@@ -11,6 +11,12 @@ class FunctionStatement;
 #include <string>
 #include <vector>
 
+enum DebugLevel {
+	NONE,
+	NORMAL,
+	ALL
+};
+
 class Interpreter {
 	std::vector<Statement*> statements;
 	HashTable<std::string, Statement*> *functions;
@@ -27,8 +33,8 @@ class Interpreter {
 	bool at_end() const { return (uint)current >= statements.size(); }
 
 	public:
-		Interpreter(std::vector<Statement*> statements, bool debug = false);
-		Interpreter(std::vector<Statement*> statements, std::istream *istream, bool debug = false);
+		Interpreter(std::vector<Statement*> statements, DebugLevel debug_level = NONE);
+		Interpreter(std::vector<Statement*> statements, std::istream *istream, DebugLevel debug_level = NONE);
 
 		void execute();
 
@@ -46,8 +52,9 @@ class Interpreter {
 		std::istream *get_istream() { return istream; };
 
 		void dump_stack() const;
+		void print_stack() const;
 
-		bool debug = false;
+		DebugLevel debug_level = NONE;
 		// flag for supressing print statements when testing
 		bool no_print = false;
 };

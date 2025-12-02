@@ -2,9 +2,9 @@
 #include <iostream>
 #include <stdexcept>
 
-Interpreter::Interpreter(std::vector<Statement*> statements, bool debug) {
+Interpreter::Interpreter(std::vector<Statement*> statements, DebugLevel debug_level) {
 	this->statements = statements;
-	this->debug = debug;
+	this->debug_level = debug_level;
 
 	this->functions = nullptr;
 	this->stack = nullptr;
@@ -12,9 +12,9 @@ Interpreter::Interpreter(std::vector<Statement*> statements, bool debug) {
 	this->istream = &std::cin;
 }
 
-Interpreter::Interpreter(std::vector<Statement*> statements, std::istream *istream, bool debug) {
+Interpreter::Interpreter(std::vector<Statement*> statements, std::istream *istream, DebugLevel debug_level) {
 	this->statements = statements;
-	this->debug = debug;
+	this->debug_level = debug_level;
 
 	this->functions = nullptr;
 	this->stack = nullptr;
@@ -94,4 +94,8 @@ void Interpreter::register_function(FunctionStatement *function) {
 
 void Interpreter::dump_stack() const {
 	std::cout << "STACK: " << stack->to_string("->") << std::endl;
+}
+
+void Interpreter::print_stack() const {
+	std::cout << stack->to_string("->");
 }

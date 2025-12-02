@@ -1,0 +1,65 @@
+# insert into a sorted list
+DEF DUP_2 (n -- n n):
+	dup 3 nswap dup 4 nswap 3 nswap swap
+;
+
+DEF SORT (... s -- ... s):
+	0 0
+	3 nswap
+	REPEAT (s):
+		drop
+		dup 2 + nswap
+		dup 3 + nswap
+		INSORT
+	;
+	dup 2 + nswap
+	1 + nswap
+;
+
+DEF INSORT (n --):
+	# increment size
+	swap 1 + dup 3 nswap 2 nswap dup dup
+	4 + nswap 1 + nswap dup
+
+	DO: TRY_INSERT_N;
+;
+
+DEF TRY_INSERT_N (i a b ... s i -- i' b a ... s i' ?):
+	dup 3 + nswap
+	3 nswap 
+	# insert
+	DUP_2 <= IF:
+		3 nswap 2 + nswap drop 0
+	;
+	# decrement and go again
+	ELSE:
+		3 nswap 1 -
+		# end of list
+		dup 1 <= IF (i):
+			drop swap 4 nswap drop 0
+		;
+		ELSE:
+			dup 3 nswap 4 nswap swap
+			4 + nswap 1 - 1
+		;
+	;
+;
+
+DEF MAIN:
+	"a to add, s to sort, p to print, e to exit" println
+	cin
+	dup "a" = IF: drop "Enter a number: " print in swap 1 + 0;
+	ELSE:
+		dup "s" = IF: drop SORT 0;
+		ELSE:
+			dup "p" = IF: "stack: " print drop dump ln 0;
+			ELSE:
+				dup "e" != IF: drop 0; ELSE: drop 1;
+			;
+		;
+	;
+;
+
+# size of list
+0
+DO: MAIN; WHILE: 1 !=;

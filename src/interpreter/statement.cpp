@@ -199,13 +199,18 @@ void ExpressionStatement::evaluate(Interpreter *interpreter) {
 			}
 			break;
 		}
+		case DUMP: {
+			if (interpreter->no_print) break;
+			interpreter->print_stack();
+			break;
+		}
 		default: {
 			interpreter->raise_error(token.line, "invalid expression statement token: " + token.lexeme);
 		}
 		break;
 	}
 
-	if (interpreter->debug) debug_log(this, interpreter);
+	if (interpreter->debug_level == ALL || (token.type == IDENTIFIER && interpreter->debug_level == NORMAL)) debug_log(this, interpreter);
 }
 
 std::string ExpressionStatement::to_string() {
@@ -239,7 +244,7 @@ void IfStatement::evaluate(Interpreter *interpreter) {
 			else_branch->evaluate(interpreter);
 	}
 
-	if (interpreter->debug) debug_log(this, interpreter);
+	if (interpreter->debug_level >= NORMAL) debug_log(this, interpreter);
 }
 
 std::string IfStatement::to_string() {
@@ -309,7 +314,7 @@ void RepeatStatement::evaluate(Interpreter *interpreter) {
 		statement->evaluate(interpreter);
 	}
 
-	if (interpreter->debug) debug_log(this, interpreter);
+	if (interpreter->debug_level >= NORMAL) debug_log(this, interpreter);
 }
 
 std::string RepeatStatement::to_string() {
@@ -336,7 +341,7 @@ void WhileStatement::evaluate(Interpreter *interpreter) {
 		if (condition != nullptr) condition->evaluate(interpreter);
 	} while (is_truthy(interpreter->pop()));
 
-	if (interpreter->debug) debug_log(this, interpreter);
+	if (interpreter->debug_level >= NORMAL) debug_log(this, interpreter);
 }
 
 std::string WhileStatement::to_string() {
@@ -356,10 +361,10 @@ PrintStatement::PrintStatement(Token string, bool new_line) {
 void PrintStatement::evaluate(Interpreter *interpreter) {
 	if (interpreter->no_print) return;
 
+	if (interpreter->debug_level == ALL) debug_log(this, interpreter);
+
 	std::cout << string;
 	if (new_line) std::cout << std::endl;
-
-	if (interpreter->debug) debug_log(this, interpreter);
 }
 
 std::string PrintStatement::to_string() {

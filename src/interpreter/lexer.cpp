@@ -30,6 +30,7 @@ std::string token_type_to_string(TokenType type) {
 		case PRINT: return "PRINT"; case CHAR_PRINT: return "CHAR_PRINT"; case PEEK: return "PEEK"; case CHAR_PEEK: return "CHAR_PEEK"; case PRINT_LN: return "PRINT_LN"; case CHAR_PRINT_LN: return "CHAR_PRINT_LN"; case LN: return "LN";
 		case INPUT: return "INPUT"; case CHAR_INPUT: return "CHAR_INPUT";
 		case DROP: return "DROP"; case DUP: return "DUP"; case SWAP: return "SWAP"; case N_SWAP: return "N_SWAP";
+		case DUMP: return "DUMP";
 		case END: return "END";
 	}
 	return "";
@@ -62,6 +63,7 @@ KeywordContainer::KeywordContainer() {
 	keywords.add("in", INPUT);
 	keywords.add("cinput", CHAR_INPUT);
 	keywords.add("cin", CHAR_INPUT);
+	keywords.add("dump", DUMP);
 }
 
 // Need to handle edge cases
