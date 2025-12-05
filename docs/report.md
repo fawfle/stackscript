@@ -124,4 +124,4 @@ A sorting algorithm that performs in O(n)
 
 #### Comparison
 
-[Comparison](./images/stackscript_performance_comparison.svg)
+![Comparison](./images/stackscript_performance_comparison.svg)
