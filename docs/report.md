@@ -99,24 +99,29 @@ Shown below are the results of the tests.
 
 ### Data Structures
 
-![Stack Operations](./images/Stack Performance.svg)
+![Stack Operations](./images/stack_performance.svg)
 
 The peak in the graph is likely the result of a resize occuring directly around that number of elements. The resize is a non linear operation since every value must be copied to a new array. While it's effects are mostly negligable when performing lots of operations, resizing the table for a few elements results in the average time per operation being much higher.
-![Hash Table Operations](./images/Hash Table Performance.svg)
+
+![Hash Table Operations](./images/hash_table_performance.svg)
 
 ### StackScript Programs
 
 #### Queue
 The performance of the queue implemented in stackscript. Supports all queue operations like enqueue, dequeue, and peek. O(n) because it must flip the stack to access the elements at the front of the queue, an operation that is O(n).
-![Queue Operations](/images/StackScript Queue Performance.svg)
+
+![Queue Operations](./images/stackscript_queue_performance.svg)
 
 #### Search
 An algorithm for searching if an element is in a list.
-![Search Operations](/images/StackScript Search Performance.svg)
+
+![Search Operations](./images/stackscript_search_performance.svg)
 
 #### Sort
 A sorting algorithm that performs in O(n)
-![Sort Operations](/images/StackScript Sort.svg)
+
+![Sort Operations](./images/stackscript_sort.svg)
 
 #### Comparison
-[Comparison](/images/StackScript Performance Comparison.svg)
+
+[Comparison](./images/stackscript_performance_comparison.svg)
