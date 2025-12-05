@@ -5,6 +5,16 @@ Problem: How can we create a beginner-friendly programming language in a creativ
 
 We will create a programming language interpreter that follows the stack oriented paradigm. Stack oriented programming languages work by manipulating data on a stack. The simplicity of hte operations makes them a good choice for developing programming languages.
 
+## **Usage**
+The primary program is the `stackscript` executable present in the build folder. It must be run with an argument containing the name of the specified program WITHOUT the txt extension. There are also two flags present for debug mode, `-d` and `-da` for debug mode in standard or verbose mode. Programs can be added in the `/src/programs/` directory with the .txt extension.
+
+`$ ./build/stackscript sort -d`
+
+## **Interpreter Structure**
+The interpreter follows the standard process. It begins with lexical analysis where the source text file is converted into tokens. The second stage is syntactic analysis where the tokens are converted into meaningful statements. Due to the linear nature of StackScript, all abstract syntax trees are just lists making parsing much easier. Finally, the interpreter simply runs through the statements and executes them.
+
+![Overview of Interpreting](./images/parser.gif)
+
 ## **Related Data Structure Alternatives**
 
 ### Stacks (Chosen Data Structure)
