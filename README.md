@@ -1,1 +1,5 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/qlTrUyUF)
+## **Usage**
+The primary program is the `stackscript` executable present in the build folder. It must be run with an argument containing the name of the specified program WITHOUT the txt extension. There are also two flags present for debug mode, `-d` and `-da` for debug mode in standard or verbose mode. Programs can be added in the `/src/programs/` directory with the .txt extension.
+
+`$ ./build/stackscript sort -d`
+
