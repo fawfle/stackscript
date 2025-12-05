@@ -108,15 +108,15 @@ The peak in the graph is likely the result of a resize occuring directly around 
 
 #### Queue
 The performance of the queue implemented in stackscript. Supports all queue operations like enqueue, dequeue, and peek. O(n) because it must flip the stack to access the elements at the front of the queue, an operation that is O(n).
-![Queue Operations](./images/StackScript Queue Performance.svg)
+![Queue Operations](/images/StackScript Queue Performance.svg)
 
 #### Search
 An algorithm for searching if an element is in a list.
-![Search Operations](./images/StackScript Search Performance.svg)
+![Search Operations](/images/StackScript Search Performance.svg)
 
 #### Sort
 A sorting algorithm that performs in O(n)
-![Sort Operations](./images/StackScript Sort.svg)
+![Sort Operations](/images/StackScript Sort.svg)
 
 #### Comparison
-[Comparison](./images/StackScript Performance Comparison.svg)
+[Comparison](/images/StackScript Performance Comparison.svg)
