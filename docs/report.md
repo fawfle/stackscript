@@ -92,6 +92,29 @@ One feature we have not implemented yet is Object Oriented Programming. This is 
 
 One limitation of this is that it is difficult and complicated to create extensions of stack-oriented programming languages like StackScript. The convoluted syntax of stack-oriented languages like StackScript makes the nature of them more rigid to work with.
 
+## **Table**
+
+### Stack
+
+| Operation | Time Complexity  |
+|-----------|------------------|
+| Push      | O(1)             |
+| Pop       | O(1)             |
+| Peek      | O(1)             |
+
+### Hash Table
+
+| Operation | Average Complexity | Worst Case Complexity |
+|-----------|--------------------|-----------------------|
+| Add       | O(1)               | O(n)                  |
+| Set       | O(1)               | O(n)                  |
+| Get       | O(1)               | O(n)                  |
+| Remove    | O(1)               | O(n)                  |
+| Contains  | O(1)               | O(n)                  |
+| Resize    | O(capacity)        | O(capacity)           |
+
+The nature of probing means most operations can degenerate into searching the entire table. However, this is unlikely and can be avoided with a lower load factor.
+
 ## **Test Results**
 Test results can be found at [this spreadsheet](https://docs.google.com/spreadsheets/d/1ga1Y00LNRcynKF0mSwuNTVj3S0svHc8H8OskdiQ-3iY/edit?gid=0#=0).
 
