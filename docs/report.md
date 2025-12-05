@@ -29,7 +29,7 @@ Queues are similar to stacks in that they use `peek()`, `pop()`, and `push()` me
 5. Add `14` to the stack: `[14]`
 6. Print `14`.
 
-### Hash Table (Chosen for Variable Storage)
+### Hash Table (Chosen for Function Lookup)
 Hash tables used to store variable pointers. This is because accessing pointers to variables via a hash function is very efficient time-wise.
 
 Another possible way to store the variables is through a dynamic array. The benefit of storing variables in the next available spot in an array is that arrays use much less space than hash tables. However, the biggest downside to an array is that iterating through an array to access a variable is much less efficient than using a hash function to access a variable in a hash table.
@@ -42,6 +42,8 @@ Another possible way to store the variables is through a dynamic array. The bene
 The hash function involves hashing keys to buckets using the modulo operation. The best case scenario is when there is no collision after applying the hashing function to the key. In this case, the time complexity is O(1) because the time complexity of applying the hashing function is O(1).
 
 The worst case scenario is when after applying the hash funciton to the key, a collision happens. The chosen method for handling collisions is quadratic probing. In this case, the time complexity is O(n) because it is theoretically possible for only one bucket to be available in the hash table, and for the program to traverse through all the buckets before reaching that empty bucket.
+
+Specifically, our table uses an initial bucket size of 23 and a load factor of 0.5. It calculates the next size by doubling the current size and finding the next closest prime. For collision resolution it uses quadratic probing with the equation `(hash_index + num_collisions^2) % capacity`.
 
 ### Stack
 The dynamic array implementation of the stack makes the stack functions very efficient.
@@ -68,9 +70,9 @@ The StackScript code is also tested for time complexity and matches the expected
 
 ## **When Does the Chosen Data Structure Fail?**
 
-The syntax of StackScript is inherently based off the stack data structure. As a result, the syntax of StackScript can be awkward to use from a user standpoint. For example, in a programming language like Python, the syntax to print `(2+4) * 5` is as follows:
+The syntax of StackScript is inherently based off the stack data structure. As a result, the syntax of StackScript can be awkward to use from a user standpoint. For example, in a programming language like Python, the syntax to print `(2 + 4) * 5` is as follows:
 
-`print((2+4) * 5)`
+`print((2 + 4) * 5)`
 
 This syntax is very straightforward because it reads how you would read a math expression. For example, the parentheses govern which operation is executed first. However, the stack-based syntax of StackScript makes it much harder to read. The same code above in python would look like this in StackScript:
 
@@ -84,8 +86,37 @@ For example, in Python, the interpreter uses the order of operations as a guide 
 
 ## **Limitations and future work**
 
-So far, StackScript has many essential programming features present in the most used programming languages. For example, it supports functions, loops (to a certain extent), and conditionals. Additionally, it has the ability to accept input and print out statements.
+So far, StackScript has many essential programming features present in the most used programming languages. For example, it supports functions, loops, and conditionals. Additionally, it has the ability to accept input and print out statements.
 
 One feature we have not implemented yet is Object Oriented Programming. This is an extremely important feature because it allows the user to create custom classes, objects, and even other data structures that are not inherently supported by StackScript. Additionally, the level of modularity allowed by classes is powerful for making code reusable and readable.
 
 One limitation of this is that it is difficult and complicated to create extensions of stack-oriented programming languages like StackScript. The convoluted syntax of stack-oriented languages like StackScript makes the nature of them more rigid to work with.
+
+## **Test Results**
+Test results can be found at [this spreadsheet](https://docs.google.com/spreadsheets/d/1ga1Y00LNRcynKF0mSwuNTVj3S0svHc8H8OskdiQ-3iY/edit?gid=0#=0).
+
+Shown below are the results of the tests.
+
+### Data Structures
+
+![Stack Operations](./images/Stack Performance.svg)
+
+The peak in the graph is likely the result of a resize occuring directly around that number of elements. The resize is a non linear operation since every value must be copied to a new array. While it's effects are mostly negligable when performing lots of operations, resizing the table for a few elements results in the average time per operation being much higher.
+![Hash Table Operations](./images/Hash Table Performance.svg)
+
+### StackScript Programs
+
+#### Queue
+The performance of the queue implemented in stackscript. Supports all queue operations like enqueue, dequeue, and peek. O(n) because it must flip the stack to access the elements at the front of the queue, an operation that is O(n).
+![Queue Operations](./images/StackScript Queue Performance.svg)
+
+#### Search
+An algorithm for searching if an element is in a list.
+![Search Operations](./images/StackScript Search Performance.svg)
+
+#### Sort
+A sorting algorithm that performs in O(n)
+![Sort Operations](./images/StackScript Sort.svg)
+
+#### Comparison
+[Comparison](./images/StackScript Performance Comparison.svg)
